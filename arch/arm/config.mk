@@ -74,8 +74,8 @@ endif
 
 checkgcc10:
 	@if test "$(call cc-name)" = "gcc" -a \
-			"$(call cc-version)" -lt "1000"; then \
-		echo '*** Your GCC is older than 10.0 and is not supported'; \
+			"$(call cc-version)" -lt "700"; then \
+		echo '*** Your GCC is older than 7.0 and is not supported'; \
 		false; \
 	fi
 
