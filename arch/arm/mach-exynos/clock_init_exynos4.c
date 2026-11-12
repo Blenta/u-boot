@@ -75,17 +75,19 @@ void system_clock_init(void)
 	writel(CLK_DIV_LCD0_VAL, &clk->div_lcd);
 
 	/* Set PLL locktime */
-	writel(PLL_LOCKTIME, &clk->apll_lock);
-	writel(PLL_LOCKTIME, &clk->mpll_lock);
-	writel(PLL_LOCKTIME, &clk->epll_lock);
-	writel(PLL_LOCKTIME, &clk->vpll_lock);
+	writel(APLL_LOCK_VAL, &clk->apll_lock);
+	writel(MPLL_LOCK_VAL, &clk->mpll_lock);
+	writel(EPLL_LOCK_VAL, &clk->epll_lock);
+	writel(VPLL_LOCK_VAL, &clk->vpll_lock);
 
 	writel(APLL_CON1_VAL, &clk->apll_con1);
 	writel(APLL_CON0_VAL, &clk->apll_con0);
 	writel(MPLL_CON1_VAL, &clk->mpll_con1);
 	writel(MPLL_CON0_VAL, &clk->mpll_con0);
+	writel(EPLL_CON2_VAL, &clk->epll_con2);
 	writel(EPLL_CON1_VAL, &clk->epll_con1);
 	writel(EPLL_CON0_VAL, &clk->epll_con0);
+	writel(VPLL_CON2_VAL, &clk->vpll_con2);
 	writel(VPLL_CON1_VAL, &clk->vpll_con1);
 	writel(VPLL_CON0_VAL, &clk->vpll_con0);
 
