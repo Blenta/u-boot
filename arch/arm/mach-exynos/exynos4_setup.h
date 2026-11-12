@@ -1,12 +1,12 @@
 /* SPDX-License-Identifier: GPL-2.0+ */
 /*
- * Machine Specific Values for EXYNOS4012 based board
+ * Machine Specific Values for EXYNOS4412 based board
  *
  * Copyright (C) 2011 Samsung Electronics
  */
 
-#ifndef _ORIGEN_SETUP_H
-#define _ORIGEN_SETUP_H
+#ifndef _EXYNOS4_SETUP_H
+#define _EXYNOS4_SETUP_H
 
 #include <asm/arch/cpu.h>
 
@@ -345,10 +345,10 @@
 					| (pdiv << 8) \
 					| (sdiv << 0))
 
-/* APLL_CON0 */
-#define APLL_MDIV		0xFA
-#define APLL_PDIV		0x6
-#define APLL_SDIV		0x1
+/* APLL_CON0 1400MHz*/ 
+#define APLL_MDIV		0xAF
+#define APLL_PDIV		0x3
+#define APLL_SDIV		0x0
 #define APLL_CON0_VAL		SET_PLL(APLL_MDIV, APLL_PDIV, APLL_SDIV)
 
 /* APLL_CON1 */
@@ -356,31 +356,31 @@
 #define APLL_AFC		0xC
 #define APLL_CON1_VAL		((APLL_AFC_ENB << 31) | (APLL_AFC << 0))
 
-/* MPLL_CON0 */
-#define MPLL_MDIV		0xC8
-#define MPLL_PDIV		0x6
-#define MPLL_SDIV		0x1
+/* MPLL_CON0 800MHz*/
+#define MPLL_MDIV		0x64
+#define MPLL_PDIV		0x3
+#define MPLL_SDIV		0x0
 #define MPLL_CON0_VAL		SET_PLL(MPLL_MDIV, MPLL_PDIV, MPLL_SDIV)
 
 /* MPLL_CON1 */
 #define MPLL_AFC_ENB		0x0
 #define MPLL_AFC		0x1C
-#define MPLL_CON1_VAL		((MPLL_AFC_ENB << 31) | (MPLL_AFC << 0))
+#define MPLL_CON1_VAL		((MPLL_AFC_ENB << 20) | (MPLL_AFC << 0))
 
-/* EPLL_CON0 */
-#define EPLL_MDIV		0x30
+/* EPLL_CON0 416MHz*/
+#define EPLL_MDIV		0x68
 #define EPLL_PDIV		0x3
-#define EPLL_SDIV		0x2
+#define EPLL_SDIV		0x1
 #define EPLL_CON0_VAL		SET_PLL(EPLL_MDIV, EPLL_PDIV, EPLL_SDIV)
 
 /* EPLL_CON1 */
 #define EPLL_K			0x0
 #define EPLL_CON1_VAL		(EPLL_K >> 0)
 
-/* VPLL_CON0 */
-#define VPLL_MDIV		0x35
+/* VPLL_CON0 440MHz*/
+#define VPLL_MDIV		0x6E
 #define VPLL_PDIV		0x3
-#define VPLL_SDIV		0x2
+#define VPLL_SDIV		0x1
 #define VPLL_CON0_VAL		SET_PLL(VPLL_MDIV, VPLL_PDIV, VPLL_SDIV)
 
 /* VPLL_CON1 */
