@@ -80,7 +80,7 @@ static void s5p_gpio_cfg_pin(struct s5p_gpio_bank *bank, int gpio, int cfg)
 	value |= CON_SFR(gpio, cfg);
 	writel(value, &bank->con);
 }
-
+#ifndef CONFIG_XPL_BUILD
 static void s5p_gpio_set_value(struct s5p_gpio_bank *bank, int gpio, int en)
 {
 	unsigned int value;
@@ -91,8 +91,9 @@ static void s5p_gpio_set_value(struct s5p_gpio_bank *bank, int gpio, int en)
 		value |= DAT_SET(gpio);
 	writel(value, &bank->dat);
 }
-
+#endif
 #ifdef CONFIG_XPL_BUILD
+#ifndef CONFIG_TARGET_TINY4412
 /* Common GPIO API - SPL does not support driver model yet */
 int gpio_set_value(unsigned gpio, int value)
 {
@@ -101,6 +102,7 @@ int gpio_set_value(unsigned gpio, int value)
 
 	return 0;
 }
+#endif
 #else
 static int s5p_gpio_get_cfg_pin(struct s5p_gpio_bank *bank, int gpio)
 {

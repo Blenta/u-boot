@@ -584,6 +584,8 @@ int spl_init(void)
 #define BOOT_DEVICE_NONE 0xdeadbeef
 #endif
 
+#ifndef CONFIG_TARGET_TINY4412
+
 __weak void board_boot_order(u32 *spl_boot_list)
 {
 	spl_boot_list[0] = spl_boot_device();
@@ -862,6 +864,7 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
 
 	jumper(&spl_image);
 }
+#endif
 
 /*
  * This requires UART clocks to be enabled.  In order for this to work the

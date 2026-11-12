@@ -49,6 +49,11 @@
 #define COPY_BL2_SIZE		0x80000
 #define BL2_START_OFFSET	((CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)/512)
 #define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)
+
+#define COPY_UBOOT_SIZE		(800 << 10) /*800 K reserved for UBOOT*/
+#define SD_UBOOT_START_OFFSET	((RESERVE_BLOCK_SIZE + BL1_SIZE + BL2_SIZE) / 512)
+#define UBOOT_SIZE_BLOC_COUNT	(COPY_UBOOT_SIZE / 512)
+
 #endif
 
 DECLARE_GLOBAL_DATA_PTR;
@@ -254,15 +259,21 @@ void copy_uboot_to_ram(void)
 		break;
 #endif
 	case BOOT_MODE_SD:
+#if defined(CONFIG_TARGET_TINY4412)
+		offset = SD_UBOOT_START_OFFSET;
+		size = UBOOT_SIZE_BLOC_COUNT;
+#else
 		offset = BL2_START_OFFSET;
 		size = BL2_SIZE_BLOC_COUNT;
+#endif
 		copy_bl2 = get_irom_func(MMC_INDEX);
 		break;
 #ifdef CONFIG_SUPPORT_EMMC_BOOT
 	case BOOT_MODE_EMMC:
 		/* Set the FSYS1 clock divisor value for EMMC boot */
+#if !defined(CONFIG_TARGET_TINY4412)
 		emmc_boot_clk_div_set();
-
+#endif
 		copy_bl2_from_emmc = get_irom_func(EMMC44_INDEX);
 		end_bootop_from_emmc = get_irom_func(EMMC44_END_INDEX);
 
