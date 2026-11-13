@@ -56,7 +56,7 @@
 
 
 &sdhci0 {
-	samsung,bus-width = <4>;
+	bus-width = <4>;
 	samsung,timing = <1 2 3>;
 	cap-mmc-highspeed = "true";
 	non-removable = "true";
@@ -65,7 +65,7 @@
 
 
 &sdhci2 {
-	samsung,bus-width = <4>;
+	bus-width = <4>;
 	samsung,timing = <1 2 3>;
 	cd-gpios = <&gpk2 2 0>;
 	cap-sd-highspeed = "true";

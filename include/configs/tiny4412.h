@@ -15,17 +15,12 @@
 #define PHYS_SDRAM_1			CFG_SYS_SDRAM_BASE
 #define SDRAM_BANK_SIZE			(256 << 20)	/* 256 MB */
 
-/* memtest works on */
-// #define CONFIG_SYS_LOAD_ADDR		(CFG_SYS_SDRAM_BASE + 0x3E00000)
-
 #define CONFIG_MACH_TYPE		MACH_TYPE_TINY4412
 
 /* select serial console configuration */
 
 /* Console configuration */
 #define CONFIG_DEFAULT_CONSOLE		"console=ttySAC0,115200n8\0"
-
-// #define CONFIG_SYS_MEM_TOP_HIDE	(1 << 20)	/* ram console */
 
 #define CONFIG_SYS_MONITOR_BASE	0x00000000
 
@@ -36,21 +31,6 @@
 
 /* MMC SPL */
 #define COPY_BL2_FNPTR_ADDR	0x02020030
-
-/* 
-	mmcdev			当前启动的MMC设备，启动时根据实际启动的MMC变更为2(sd)或者0(eMMC)
-	sddev 			sd卡是MMC2设备
-	sdkernelboff 	内核在sd卡上面的偏移(块)
-	eMMCkernelboff 	内核在eMMC上面的偏移(块)
-	kernelbsize 	内核(块)大小,uboot烧录内核镜像时需要￥改变其值￥
-	bootargs		传递给内核的参数
-
-
-	bootenv
-	loadbootenv
-	importbootenv
-	以上3个环境变量并未使用到，这几个是与在文件系统读取镜像有关的参数，留待以后需要修改时使用。
- */
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	"loadaddr=0x40008000\0" \

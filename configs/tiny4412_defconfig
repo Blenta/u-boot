@@ -27,7 +27,6 @@ CONFIG_SPL_LIBGENERIC_SUPPORT=y
 CONFIG_SPL_SYS_MALLOC=y
 
 CONFIG_IDENT_STRING=" for TINY4412"
-CONFIG_SYS_MEM_TOP_HIDE=0x00100000
 CONFIG_DISTRO_DEFAULTS=y
 CONFIG_BOOTCOMMAND="if mmc rescan; then echo SD/MMC found on device ${mmcdev}; if run loadbootenv; then echo Loaded environment from ${bootenv}; run importbootenv; fi; if test -n $uenvcmd; then echo Running uenvcmd ...; run uenvcmd; fi; if run loadbootscript; then run bootscript; fi; fi; load mmc ${mmcdev} ${loadaddr} zImage; bootz ${loadaddr} "
 
