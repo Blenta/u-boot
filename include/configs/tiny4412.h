@@ -38,8 +38,6 @@
 	"kerneladdr=0x40008000\0" \
 	"ramdiskaddr=0x48000000\0" \
 	"console=ttySAC0,115200n8\0" \
-	"mmcdev=0\0" \
-	"sddev=2\0" \
 	"sdkernelboff=0x691\0" \
 	"eMMCkernelboff=0x0\0" \
 	"kernelbsize=0x2480\0" \
