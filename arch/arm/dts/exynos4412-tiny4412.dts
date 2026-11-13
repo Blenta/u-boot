@@ -15,7 +15,7 @@
 	compatible = "samsung,tiny4412", "samsung,exynos4412";
 
 	chosen {
-		bootargs ="";
+		bootargs ="root=/dev/mmcblk0p1 rootfstype=ext4 console=ttySAC0,115200 init=/linuxrc ctp=2 skipcali=y";
 	};
 
 	config {

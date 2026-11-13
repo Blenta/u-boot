@@ -50,6 +50,11 @@
 #define BL2_START_OFFSET	((CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)/512)
 #define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)
 
+#define RESERVE_BLOCK_SIZE		(512)
+#define BL1_SIZE			(8 << 10) /*8 K reserved for BL1*/
+#define BL2_SIZE			(16 << 10) /*16 K reserved for BL2*/
+#define TINY4412_ENV_SIZE			(16 << 10) /*16 K reserved for ENV*/
+
 #define COPY_UBOOT_SIZE		(800 << 10) /*800 K reserved for UBOOT*/
 #define SD_UBOOT_START_OFFSET	((RESERVE_BLOCK_SIZE + BL1_SIZE + BL2_SIZE) / 512)
 #define UBOOT_SIZE_BLOC_COUNT	(COPY_UBOOT_SIZE / 512)
