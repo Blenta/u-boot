@@ -232,9 +232,9 @@
 
 /* SCLK_MMC[0-4] = MOUTMMC[0-4]/(MMC[0-4]_RATIO + 1)/(MMC[0-4]_PRE_RATIO +1) */
 
-/* CLK_DIV_FSYS1 MMC0=eMMC:20MHz*/
-#define MMC0_RATIO		0x9
-#define MMC0_PRE_RATIO		0x3
+/* CLK_DIV_FSYS1 */
+#define MMC0_RATIO		0xF
+#define MMC0_PRE_RATIO		0x0
 #define MMC1_RATIO		0xF
 #define MMC1_PRE_RATIO		0x0
 #define CLK_DIV_FSYS1_VAL	((MMC1_PRE_RATIO << 24) \
@@ -242,9 +242,9 @@
 				| (MMC0_PRE_RATIO << 8) \
 				| (MMC0_RATIO << 0))
 
-/* CLK_DIV_FSYS2  MMC2=SDMMC:20MHz*/
-#define MMC2_RATIO		0x9
-#define MMC2_PRE_RATIO		0x3
+/* CLK_DIV_FSYS2 */
+#define MMC2_RATIO		0xF
+#define MMC2_PRE_RATIO		0x0
 #define MMC3_RATIO		0xF
 #define MMC3_PRE_RATIO		0x0
 #define CLK_DIV_FSYS2_VAL	((MMC3_PRE_RATIO << 24) \
@@ -403,9 +403,9 @@
 #define MPLL_CON1_VAL	(0x00803800)
 
 /* EPLL_CON0 96MHz*/
-#define EPLL_MDIV		0x40
-#define EPLL_PDIV		0x2
-#define EPLL_SDIV		0x3
+#define EPLL_MDIV		0x30
+#define EPLL_PDIV		0x3
+#define EPLL_SDIV		0x2
 #define EPLL_CON0_VAL		SET_PLL(EPLL_MDIV, EPLL_PDIV, EPLL_SDIV)
 
 /* EPLL_CON1 */
@@ -413,10 +413,10 @@
 /* EPLL_CON2 */
 #define EPLL_CON2_VAL	0x00000080
 
-/* VPLL_CON0 108MHz*/
-#define VPLL_MDIV		0x48
-#define VPLL_PDIV		0x2
-#define VPLL_SDIV		0x3
+/* VPLL_CON0 106MHz*/
+#define VPLL_MDIV		0x35
+#define VPLL_PDIV		0x3
+#define VPLL_SDIV		0x2
 #define VPLL_CON0_VAL		SET_PLL(VPLL_MDIV, VPLL_PDIV, VPLL_SDIV)
 
 /* VPLL_CON1 */
