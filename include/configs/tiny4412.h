@@ -25,14 +25,10 @@
 #define S5P_CHECK_LPA			0xABAD0000
 
 #define CFG_EXTRA_ENV_SETTINGS \
-	"loadaddr=0x40008000\0" \
-	"rdaddr=0x48000000\0" \
-	"kerneladdr=0x40008000\0" \
-	"ramdiskaddr=0x48000000\0" \
-	"console=ttySAC0,115200n8\0" \
+	"loadaddr=0x41000000\0" \
 	"sdkernelboff=0x691\0" \
 	"eMMCkernelboff=0x690\0" \
-	"kernelbsize=0x2800\0"
+	"kernelbsize=0x5000\0"
 
 #ifdef CONFIG_SPL_BUILD
 #define SYS_INIT_SP_ADDR		0x02040000

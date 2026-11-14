@@ -15,7 +15,7 @@
 	compatible = "samsung,tiny4412", "samsung,exynos4412";
 
 	chosen {
-		bootargs ="root=/dev/mmcblk0p1 rootfstype=ext4 console=ttySAC0,115200 init=/linuxrc ctp=2 skipcali=y";
+		bootargs ="root=/dev/mmcblk0p1 rootfstype=ext4 console=ttySAC0,115200 init=/linuxrc ctp=2 skipcali=y earlyprintk";
 	};
 
 	config {
@@ -23,7 +23,7 @@
 		/* 
 		* sd_env_offset = 512 + 8*1024 + 16*1024 + 800*1024
 		* emmc_env_offset = sd_env_offset - 512
-		* kernel-offset = 512 + 8*1024 + 16*1024*2 + 800*1024
+		* kernel-offset = 512 + 8*1024 + 16*1024 + 800*1024 + 16*1024
 		*/
 		u-boot,sd-env-offset = <0xCE200>;
 		u-boot,emmc-env-offset = <0xCE000>;
@@ -33,12 +33,12 @@
 			if test ${mmcbootdev} = 2; then \
 				if mmc dev ${mmcbootdev}; then \
 					echo read zImage from SD card...; \
-					mmc read ${kerneladdr} ${sdkernelboff} ${kernelbsize}; \
+					mmc read ${loadaddr} ${sdkernelboff} ${kernelbsize}; \
 				fi; \
 			else \
 				if mmc dev 0 0; then \
 					echo read zImage from eMMC card...; \
-					mmc read ${kerneladdr} ${eMMCkernelboff} ${kernelbsize}; \
+					mmc read ${loadaddr} ${eMMCkernelboff} ${kernelbsize}; \
 				fi; \
 			fi; \
 		fi; \
