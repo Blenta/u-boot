@@ -26,9 +26,13 @@
 
 #define CFG_EXTRA_ENV_SETTINGS \
 	"loadaddr=0x41000000\0" \
-	"sdkernelboff=0x691\0" \
-	"eMMCkernelboff=0x690\0" \
-	"kernelbsize=0x5000\0"
+	"sdkernelboff=0x851\0" \
+	"eMMCkernelboff=0x850\0" \
+	"kernelbsize=0x5000\0" \
+	"fastboot_raw_partition_bl1=0x1 0x10\0" \
+	"fastboot_raw_partition_bl2=0x11 0x20\0" \
+	"fastboot_raw_partition_env=0x31 0x20\0" \
+	"fastboot_raw_partition_bootloader=0x51 0x800\0"
 
 #ifdef CONFIG_SPL_BUILD
 #define SYS_INIT_SP_ADDR		0x02040000

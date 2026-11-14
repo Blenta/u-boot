@@ -11,7 +11,7 @@
 #include "exynos4412.dtsi"
 
 / {
-	model = "Tiny4412(v1412) board based on Exynos4412";
+	model = "Tiny4412 board based on Exynos4412";
 	compatible = "samsung,tiny4412", "samsung,exynos4412";
 
 	chosen {
@@ -21,12 +21,12 @@
 	config {
 
 		/* 
-		* sd_env_offset = 512 + 8*1024 + 16*1024 + 800*1024
+		* sd_env_offset = 512 + 8*1024 + 16*1024
 		* emmc_env_offset = sd_env_offset - 512
-		* kernel-offset = 512 + 8*1024 + 16*1024 + 800*1024 + 16*1024
+		* kernel-offset = 512 + 8*1024 + 16*1024 + 16*1024 + 1024*1024
 		*/
-		u-boot,sd-env-offset = <0xCE200>;
-		u-boot,emmc-env-offset = <0xCE000>;
+		u-boot,sd-env-offset = <0x6200>;
+		u-boot,emmc-env-offset = <0x6000>;
 		bootcmd = "
 		if mmc rescan; then \
 			echo SD/MMC found on device ${mmcbootdev}; \
