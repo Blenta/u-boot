@@ -622,7 +622,7 @@ static void __maybe_unused oem_format(char *cmd_parameter, char *response)
 {
 	char cmdbuf[32];
 	const int mmc_dev = CONFIG_IS_ENABLED(FASTBOOT_FLASH_MMC,
-					      (CONFIG_VAL(FASTBOOT_FLASH_MMC_DEV)),
+					      (env_get_ulong("fastboot_mmc_dev", 10, 0)),
 					      (-1));
 
 	if (flashing_refuse_if_locked(response))
@@ -649,7 +649,7 @@ static void __maybe_unused oem_partconf(char *cmd_parameter, char *response)
 {
 	char cmdbuf[32];
 	const int mmc_dev = CONFIG_IS_ENABLED(FASTBOOT_FLASH_MMC,
-					      (CONFIG_VAL(FASTBOOT_FLASH_MMC_DEV)),
+					      (env_get_ulong("fastboot_mmc_dev", 10, 0)),
 					      (-1));
 
 	if (flashing_refuse_if_locked(response))
@@ -679,7 +679,7 @@ static void __maybe_unused oem_bootbus(char *cmd_parameter, char *response)
 {
 	char cmdbuf[32];
 	const int mmc_dev = CONFIG_IS_ENABLED(FASTBOOT_FLASH_MMC,
-					      (CONFIG_VAL(FASTBOOT_FLASH_MMC_DEV)),
+					      (env_get_ulong("fastboot_mmc_dev", 10, 0)),
 					      (-1));
 
 	if (flashing_refuse_if_locked(response))
@@ -753,7 +753,7 @@ static struct blk_desc *flashing_flash_dev(void)
 	if (CONFIG_IS_ENABLED(FASTBOOT_FLASH_MMC))
 		return blk_get_dev("mmc",
 				   CONFIG_IS_ENABLED(FASTBOOT_FLASH_MMC,
-						     (CONFIG_VAL(FASTBOOT_FLASH_MMC_DEV)),
+						     (env_get_ulong("fastboot_mmc_dev", 10, 0)),
 						     (-1)));
 
 	if (CONFIG_IS_ENABLED(FASTBOOT_FLASH_BLOCK))

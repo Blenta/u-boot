@@ -50,11 +50,10 @@ int exynos_early_init_f(void)
 }
 #endif
 
-#ifdef CONFIG_BOARD_LATE_INIT
+#if defined(CONFIG_BOARD_LATE_INIT)
 int exynos_late_init(void)
 {
-	int mmcbootdev = mmc_get_env_dev();
-	if (mmcbootdev == 2) {// MMC2: SD Card
+	if (env_get_ulong("fastboot_mmc_dev", 10, 0) == 2) {// MMC2: SD Card
 		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
 		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
 		env_set("fastboot_raw_partition_bootloader", "0x31 0x800");// Bootloader: 1024K

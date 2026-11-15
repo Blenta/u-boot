@@ -112,7 +112,7 @@ int __weak fastboot_set_reboot_flag(enum fastboot_reboot_reason reason)
 
 	if (device == -1) {
 		device = CONFIG_IS_ENABLED(FASTBOOT_FLASH_MMC,
-					   (CONFIG_VAL(FASTBOOT_FLASH_MMC_DEV)),
+					   (env_get_ulong("fastboot_mmc_dev", 10, 0)),
 					   (-1));
 	}
 

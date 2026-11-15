@@ -81,7 +81,7 @@ static int do_get_part_info(struct blk_desc **dev_desc, const char *name,
 	int ret;
 
 	/* First try partition names on the default device */
-	*dev_desc = blk_get_dev("mmc", CONFIG_VAL(FASTBOOT_FLASH_MMC_DEV));
+	*dev_desc = blk_get_dev("mmc", env_get_ulong("fastboot_mmc_dev", 10, 0));
 	if (*dev_desc) {
 		ret = part_get_info_by_name(*dev_desc, name, info);
 		if (ret >= 0)
@@ -353,7 +353,7 @@ int fastboot_mmc_get_part_info(const char *part_name,
 static struct blk_desc *fastboot_mmc_get_dev(char *response)
 {
 	struct blk_desc *ret = blk_get_dev("mmc",
-					   CONFIG_VAL(FASTBOOT_FLASH_MMC_DEV));
+					   env_get_ulong("fastboot_mmc_dev", 10, 0));
 
 	if (!ret || ret->type == DEV_TYPE_UNKNOWN) {
 		pr_err("invalid mmc device\n");
@@ -492,7 +492,7 @@ void fastboot_mmc_erase(const char *cmd, char *response)
 {
 	struct blk_desc *dev_desc;
 	struct disk_partition info;
-	struct mmc *mmc = find_mmc_device(CONFIG_VAL(FASTBOOT_FLASH_MMC_DEV));
+	struct mmc *mmc = find_mmc_device(env_get_ulong("fastboot_mmc_dev", 10, 0));
 
 #if CONFIG_IS_ENABLED(FASTBOOT_MMC_BOOT_SUPPORT)
 	if (!strcmp(cmd, CONFIG_VAL(FASTBOOT_MMC_BOOT1_NAME))) {
