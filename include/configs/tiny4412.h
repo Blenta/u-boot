@@ -22,7 +22,8 @@
 #define CFG_EXTRA_ENV_SETTINGS \
 	"loadaddr=0x41000000\0" \
 	"kernelboff=0x851\0" \
-	"kernelbsize=0x5000\0"
+	"kernelbsize=0x5000\0" \
+	"fastboot_raw_partition_kernel=0x851 0x5000\0"
 
 #ifdef CONFIG_SPL_BUILD
 #define SYS_INIT_SP_ADDR		0x02040000
