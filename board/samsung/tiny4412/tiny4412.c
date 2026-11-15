@@ -58,9 +58,9 @@ int exynos_late_init(void)
 		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
 		env_set("fastboot_raw_partition_bootloader", "0x31 0x800");// Bootloader: 1024K
 	} else {// MMC0: eMMC
-		env_set("fastboot_raw_partition_bl1", "0x0 0x10");
-		env_set("fastboot_raw_partition_bl2", "0x10 0x20");
-		env_set("fastboot_raw_partition_bootloader", "0x30 0x800");
+		env_set("fastboot_raw_partition_bl1", "0x0 0x10 mmcpart 1");
+		env_set("fastboot_raw_partition_bl2", "0x10 0x20 mmcpart 1");
+		env_set("fastboot_raw_partition_bootloader", "0x30 0x800 mmcpart 1");
 	}
 	return 0;
 }
