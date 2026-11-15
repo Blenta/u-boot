@@ -19,32 +19,8 @@
 	};
 
 	config {
-
-		/* 
-		* sd_env_offset = 512 + 8*1024 + 16*1024
-		* emmc_env_offset = sd_env_offset - 512
-		* kernel-offset = 512 + 8*1024 + 16*1024 + 16*1024 + 1024*1024
-		*/
-		u-boot,sd-env-offset = <0x6200>;
-		u-boot,emmc-env-offset = <0x6000>;
-		bootcmd = "
-		if mmc rescan; then \
-			echo SD/MMC found on device ${mmcbootdev}; \
-			if test ${mmcbootdev} = 2; then \
-				if mmc dev ${mmcbootdev}; then \
-					echo read zImage from SD card...; \
-					mmc read ${loadaddr} ${sdkernelboff} ${kernelbsize}; \
-				fi; \
-			else \
-				if mmc dev 0 0; then \
-					echo read zImage from eMMC card...; \
-					mmc read ${loadaddr} ${eMMCkernelboff} ${kernelbsize}; \
-				fi; \
-			fi; \
-		fi; \
-		bootz ${loadaddr} ";
+		bootcmd = "mmc rescan; mmc dev ${mmcbootdev}; mmc read ${loadaddr} ${kernelboff} ${kernelbsize}; bootz ${loadaddr} ";
 	};
-
 
 	aliases {
 		mmc0 = &sdhci0;

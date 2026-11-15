@@ -43,6 +43,11 @@ __weak int exynos_early_init_f(void)
 	return 0;
 }
 
+__weak int exynos_late_init(void)
+{
+	return 0;
+}
+
 __weak void exynos_init(void)
 {
 }
@@ -243,7 +248,7 @@ int board_late_init(void)
 	sprintf(mmcbootdev_str, "%u", mmcbootdev);
 	env_set("mmcbootdev", mmcbootdev_str);
 
-	return 0;
+	return exynos_late_init();
 }
 #endif
 

@@ -38,6 +38,11 @@
 #include "common_setup.h"
 #include "exynos5_setup.h"
 
+/* Power Down Modes */
+#define S5P_CHECK_SLEEP			0x00000BAD
+#define S5P_CHECK_DIDLE			0xBAD00000
+#define S5P_CHECK_LPA			0xABAD0000
+
 /* These are the things we can do during low-level init */
 enum {
 	DO_WAKEUP	= 1 << 0,

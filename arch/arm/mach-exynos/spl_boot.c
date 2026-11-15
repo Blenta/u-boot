@@ -45,19 +45,16 @@
 
 #define EXYNOS_COPY_SPI_FNPTR_ADDR	0x02020058
 #define SPI_FLASH_UBOOT_POS	(SEC_FW_SIZE + BL1_SIZE)
+
 #elif defined(CONFIG_ARCH_EXYNOS4)
-#define COPY_BL2_SIZE		0x80000
-#define BL2_START_OFFSET	((CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)/512)
-#define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)
 
-#define RESERVE_BLOCK_SIZE	(512)
-#define BL1_SIZE			(8 << 10) /*8 K reserved for BL1*/
-#define BL2_SIZE			(16 << 10) /*16 K reserved for BL2*/
-#define TINY4412_ENV_SIZE	(16 << 10) /*16 K reserved for ENV*/
+#define RES_SIZE	(512)
+#define BL1_SIZE	(8 << 10)		/* 8KB */
+#define BL2_SIZE	(8 << 10) 		/* 8KB */
+#define UBOOT_SIZE	(1024 << 10)	/* 1024KB */
 
-#define COPY_UBOOT_SIZE		(1024 << 10) /*1024 K reserved for UBOOT*/
-#define SD_UBOOT_START_OFFSET	((RESERVE_BLOCK_SIZE + BL1_SIZE + BL2_SIZE + TINY4412_ENV_SIZE) / 512)
-#define UBOOT_SIZE_BLOC_COUNT	(COPY_UBOOT_SIZE / 512)
+#define UBOOT_START_OFFSET		((RES_SIZE + BL1_SIZE + BL2_SIZE)/512)
+#define UBOOT_SIZE_BLOC_COUNT	(UBOOT_SIZE/512)
 
 #endif
 
@@ -264,17 +261,14 @@ void copy_uboot_to_ram(void)
 		break;
 #endif
 	case BOOT_MODE_SD:
-#if defined(CONFIG_TARGET_TINY4412)
-		offset = SD_UBOOT_START_OFFSET;
+		offset = UBOOT_START_OFFSET;
 		size = UBOOT_SIZE_BLOC_COUNT;
-#else
-		offset = BL2_START_OFFSET;
-		size = BL2_SIZE_BLOC_COUNT;
-#endif
+
 		copy_bl2 = get_irom_func(MMC_INDEX);
 		break;
 #ifdef CONFIG_SUPPORT_EMMC_BOOT
 	case BOOT_MODE_EMMC:
+	case BOOT_MODE_EMMC_SD:
 		/* Set the FSYS1 clock divisor value for EMMC boot */
 #if !defined(CONFIG_TARGET_TINY4412)
 		emmc_boot_clk_div_set();
@@ -282,7 +276,7 @@ void copy_uboot_to_ram(void)
 		copy_bl2_from_emmc = get_irom_func(EMMC44_INDEX);
 		end_bootop_from_emmc = get_irom_func(EMMC44_END_INDEX);
 
-		copy_bl2_from_emmc(BL2_SIZE_BLOC_COUNT, CONFIG_TEXT_BASE);
+		copy_bl2_from_emmc(UBOOT_SIZE_BLOC_COUNT, CONFIG_TEXT_BASE);
 		end_bootop_from_emmc();
 		break;
 #endif

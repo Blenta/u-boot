@@ -9,6 +9,8 @@
 #include <asm/arch/mmc.h>
 #include <asm/arch/periph.h>
 #include <asm/arch/pinmux.h>
+#include <env.h>
+#include <mmc.h>
 #include <usb.h>
 #include <usb/dwc2_udc.h>
 
@@ -44,6 +46,23 @@ int board_usb_init(int index, enum usb_init_type init)
 #ifdef CONFIG_BOARD_EARLY_INIT_F
 int exynos_early_init_f(void)
 {
+	return 0;
+}
+#endif
+
+#ifdef CONFIG_BOARD_LATE_INIT
+int exynos_late_init(void)
+{
+	int mmcbootdev = mmc_get_env_dev();
+	if (mmcbootdev == 2) {// MMC2: SD Card
+		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
+		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
+		env_set("fastboot_raw_partition_bootloader", "0x31 0x800");// Bootloader: 1024K
+	} else {// MMC0: eMMC
+		env_set("fastboot_raw_partition_bl1", "0x0 0x10");
+		env_set("fastboot_raw_partition_bl2", "0x10 0x20");
+		env_set("fastboot_raw_partition_bootloader", "0x30 0x800");
+	}
 	return 0;
 }
 #endif
