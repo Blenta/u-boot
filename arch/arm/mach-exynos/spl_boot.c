@@ -50,7 +50,7 @@
 
 #define RES_SIZE	(512)
 #define BL1_SIZE	(8 << 10)		/* 8KB */
-#define BL2_SIZE	(8 << 10) 		/* 8KB */
+#define BL2_SIZE	(16 << 10) 		/* 16KB */
 #define UBOOT_SIZE	(1024 << 10)	/* 1024KB */
 
 #define UBOOT_START_OFFSET		((RES_SIZE + BL1_SIZE + BL2_SIZE)/512)
