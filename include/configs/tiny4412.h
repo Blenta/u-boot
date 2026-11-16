@@ -20,10 +20,14 @@
 #define CONFIG_SYS_MONITOR_BASE	0x00000000
 
 #define CFG_EXTRA_ENV_SETTINGS \
-	"loadaddr=0x41000000\0" \
+	"kernelloadaddr=0x41000000\0" \
+	"ramdiskloadaddr=0x42000000\0" \
 	"kernelboff=0x851\0" \
 	"kernelbsize=0x5000\0" \
-	"fastboot_raw_partition_kernel=0x851 0x5000\0"
+	"ramdiskboff=0x5851\0" \
+	"ramdiskbsize=0x5000\0" \
+	"fastboot_raw_partition_kernel=0x851 0x5000\0" \
+	"fastboot_raw_partition_ramdisk=0x5851 0x5000\0"
 
 #ifdef CONFIG_SPL_BUILD
 #define SYS_INIT_SP_ADDR		0x02040000

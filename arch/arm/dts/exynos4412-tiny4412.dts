@@ -15,11 +15,14 @@
 	compatible = "samsung,tiny4412", "samsung,exynos4412";
 
 	chosen {
-		bootargs ="root=/dev/mmcblk0p1 rootfstype=ext4 console=ttySAC0,115200 init=/linuxrc ctp=2 skipcali=y earlyprintk";
+		bootargs ="console=ttySAC0,115200n8 androidboot.console=ttySAC0 ctp=1 skipcali=y vmalloc=384m ethmac=1C:6F:65:34:51:7E androidboot.selinux=permissive";
 	};
 
 	config {
-		bootcmd = "mmc rescan; mmc dev ${mmcbootdev}; mmc read ${loadaddr} ${kernelboff} ${kernelbsize}; bootz ${loadaddr} ";
+		bootcmd = "mmc rescan; mmc dev ${mmcbootdev}; \ 
+			mmc read ${kernelloadaddr} ${kernelboff} ${kernelbsize}; \
+			mmc read ${ramdiskloadaddr} ${ramdiskboff} ${ramdiskbsize}; \
+			bootz ${kernelloadaddr} ${ramdiskloadaddr}";
 	};
 
 	aliases {
