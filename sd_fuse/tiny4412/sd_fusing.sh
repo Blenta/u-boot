@@ -42,16 +42,17 @@ fi
 # check files
 
 E4412_UBOOT=../../u-boot.bin
-E4412_UBOOT_SPL=../../spl/u-boot-spl.bin
-MKBL2=../mkbl2
+E4412_UBOOT_SPL=../../spl/tiny4412-spl.bin
 
 if [ ! -f ${E4412_UBOOT} ]; then
 	echo "Error: u-boot.bin NOT found, please build it & try again."
 	exit -1
 fi
 
-#<make bl2>
-#${MKBL2} ${E4412_UBOOT_SPL} bl2.bin 14336
+if [ ! -f ${E4412_UBOOT_SPL} ]; then
+	echo "Error: tiny4412-spl.bin NOT found, please build it & try again."
+	exit -1
+fi
 
 ####################################
 # fusing images
@@ -90,17 +91,12 @@ dd iflag=dsync oflag=dsync if=./E4412_N.bl1.bin of=$1 seek=$signed_bl1_position
 #<BL2 fusing>
 echo "---------------------------------------"
 echo "BL2 fusing"
-dd iflag=dsync oflag=dsync if=../../spl/tiny4412-spl.bin of=$1 seek=$bl2_position
+dd iflag=dsync oflag=dsync if=${E4412_UBOOT_SPL} of=$1 seek=$bl2_position
 
 #<u-boot fusing>
 echo "---------------------------------------"
 echo "u-boot fusing"
-dd iflag=dsync oflag=dsync if=../../u-boot.bin of=$1 seek=$uboot_position
-
-#<TrustZone S/W fusing>
-#echo "---------------------------------------"
-#echo "TrustZone S/W fusing"
-#dd iflag=dsync oflag=dsync if=./E4412_tzsw.bin of=$1 seek=$tzsw_position
+dd iflag=dsync oflag=dsync if=${E4412_UBOOT} of=$1 seek=$uboot_position
 
 #<flush to disk>
 sync
