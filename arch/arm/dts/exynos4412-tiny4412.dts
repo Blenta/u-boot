@@ -19,9 +19,10 @@
 	};
 
 	config {
-		bootcmd = "mmc rescan; mmc dev ${mmcbootdev}; \ 
+		bootcmd = "mmc rescan; mmc dev ${mmcbootdev}; \
 			mmc read ${kernelloadaddr} ${kernelboff} ${kernelbsize}; \
 			mmc read ${ramdiskloadaddr} ${ramdiskboff} ${ramdiskbsize}; \
+			setenv initrd_high 0xffffffff; \
 			bootz ${kernelloadaddr} ${ramdiskloadaddr}";
 	};
 
