@@ -19,6 +19,14 @@
 		bootargs ="console=ttySAC2,115200n8 androidboot.console=ttySAC2 ctp=1 skipcali=y";
 	};
 
+	config {
+		bootcmd = "mmc rescan; mmc dev ${mmcbootdev}; \
+			mmc read ${kernelloadaddr} ${kernelboff} ${kernelbsize}; \
+			mmc read ${ramdiskloadaddr} ${ramdiskboff} ${ramdiskbsize}; \
+			setenv initrd_high 0xffffffff; \
+			bootz ${kernelloadaddr} ${ramdiskloadaddr}";
+	};
+
 	aliases {
 		mmc0 = &mshc_0;
 		mmc2 = &sdhci2;
@@ -26,32 +34,25 @@
 		console = "/serial@13820000";
 	};
 
-	emmc-reset {
-		compatible = "samsung,emmc-reset";
-		reset-gpio = <&gpk1 2 0>;
-	};
-
 };
 
 &mshc_0 {
-	status = "okay";
-	broken-cd;
-	card-detect-delay = <200>;
-	mmc-ddr-1_8v;
 	div = <0x3>;
 	index = <4>;
-	samsung,dw-mshc-ciu-div = <3>;
 	samsung,dw-mshc-sdr-timing = <2 3>;
-	samsung,dw-mshc-ddr-timing = <1 2>;
 	bus-width = <8>;
 	cap-mmc-highspeed;
+	non-removable;
+	broken-cd;
+	card-detect-delay = <200>;
+	status = "okay";
 };
 
 &sdhci2 {
 	bus-width = <4>;
 	samsung,timing = <1 2 3>;
 	cd-gpios = <&gpx0 7 0>;
-	cap-sd-highspeed = "true";
-	cd-inverted = "true";
+	cap-sd-highspeed;
+	cd-inverted;
 	status = "okay";
 };
