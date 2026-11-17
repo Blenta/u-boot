@@ -233,7 +233,7 @@ int do_lowlevel_init(void)
 #endif
 #endif
 		mem_ctrl_init(actions & DO_MEM_RESET);
-#ifndef CONFIG_TARGET_TINY4412
+#if !defined(CONFIG_TARGET_TINY4412) && !defined(CONFIG_TARGET_ITOP4412)
 		tzpc_init();
 #endif
 	}

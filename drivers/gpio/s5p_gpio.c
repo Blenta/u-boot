@@ -93,7 +93,7 @@ static void s5p_gpio_set_value(struct s5p_gpio_bank *bank, int gpio, int en)
 }
 #endif
 #ifdef CONFIG_XPL_BUILD
-#ifndef CONFIG_TARGET_TINY4412
+#if !defined(CONFIG_TARGET_TINY4412) && !defined(CONFIG_TARGET_ITOP4412)
 /* Common GPIO API - SPL does not support driver model yet */
 int gpio_set_value(unsigned gpio, int value)
 {

@@ -2,7 +2,7 @@
 /*
  * Copyright (C) 2011 Samsung Electronics
  *
- * Configuration settings for the SAMSUNG TINY4412 (EXYNOS4412) board.
+ * Configuration settings for the FriendlyARM TINY4412 (EXYNOS4412) board.
  */
 
 #ifndef __CONFIG_TINY4412_H

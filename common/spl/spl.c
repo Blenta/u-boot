@@ -584,7 +584,7 @@ int spl_init(void)
 #define BOOT_DEVICE_NONE 0xdeadbeef
 #endif
 
-#ifndef CONFIG_TARGET_TINY4412
+#if !defined(CONFIG_TARGET_TINY4412) && !defined(CONFIG_TARGET_ITOP4412)
 
 __weak void board_boot_order(u32 *spl_boot_list)
 {

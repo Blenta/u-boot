@@ -270,7 +270,7 @@ void copy_uboot_to_ram(void)
 	case BOOT_MODE_EMMC:
 	case BOOT_MODE_EMMC_SD:
 		/* Set the FSYS1 clock divisor value for EMMC boot */
-#if !defined(CONFIG_TARGET_TINY4412)
+#if !defined(CONFIG_TARGET_TINY4412) && !defined(CONFIG_TARGET_ITOP4412)
 		emmc_boot_clk_div_set();
 #endif
 		copy_bl2_from_emmc = get_irom_func(EMMC44_INDEX);

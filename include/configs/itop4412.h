@@ -1,0 +1,38 @@
+/* SPDX-License-Identifier: GPL-2.0+ */
+/*
+ * Copyright (C) 2011 Samsung Electronics
+ *
+ * Configuration settings for the TOPEET iTOP-4412 (EXYNOS4412) board.
+ */
+
+#ifndef __CONFIG_ITOP4412_H
+#define __CONFIG_ITOP4412_H
+
+#include <configs/exynos4-common.h>
+
+/* ITOP4412 has 4 bank of DRAM */
+#define CFG_SYS_SDRAM_BASE		0x40000000
+#define PHYS_SDRAM_1			CFG_SYS_SDRAM_BASE
+#define SDRAM_BANK_SIZE			(256 << 20)	/* 256 MB */
+
+#define CONFIG_MACH_TYPE		MACH_TYPE_SMDKC210
+
+#define CONFIG_SYS_MONITOR_BASE	0x00000000
+
+#define CFG_EXTRA_ENV_SETTINGS \
+	"kernelloadaddr=0x41000000\0" \
+	"ramdiskloadaddr=0x42000000\0" \
+	"kernelboff=0x851\0" \
+	"kernelbsize=0x5000\0" \
+	"ramdiskboff=0x5851\0" \
+	"ramdiskbsize=0x5000\0" \
+	"fastboot_raw_partition_kernel=0x851 0x5000\0" \
+	"fastboot_raw_partition_ramdisk=0x5851 0x5000\0"
+
+#ifdef CONFIG_SPL_BUILD
+#define SYS_INIT_SP_ADDR		0x02040000
+#else
+#define SYS_INIT_SP_ADDR		0x42E00000
+#endif
+
+#endif	/* __CONFIG_ITOP4412_H */

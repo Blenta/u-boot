@@ -1,0 +1,57 @@
+/*
+ * TOPEET's Exynos4412 based itop board device tree source
+ *
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * SPDX-License-Identifier:	GPL-2.0+
+ */
+
+/dts-v1/;
+#include "skeleton.dtsi"
+#include "exynos4412.dtsi"
+
+/ {
+	model = "TOPEET iTop 4412 Elite board based on Exynos4412";
+	compatible = "topeet,itop4412-elite", "samsung,exynos4412";
+
+	chosen {
+		bootargs ="console=ttySAC2,115200n8 androidboot.console=ttySAC2 ctp=1 skipcali=y";
+	};
+
+	aliases {
+		mmc0 = &mshc_0;
+		mmc2 = &sdhci2;
+		serial0 = "/serial@13820000";
+		console = "/serial@13820000";
+	};
+
+	emmc-reset {
+		compatible = "samsung,emmc-reset";
+		reset-gpio = <&gpk1 2 0>;
+	};
+
+};
+
+&mshc_0 {
+	status = "okay";
+	broken-cd;
+	card-detect-delay = <200>;
+	mmc-ddr-1_8v;
+	div = <0x3>;
+	index = <4>;
+	samsung,dw-mshc-ciu-div = <3>;
+	samsung,dw-mshc-sdr-timing = <2 3>;
+	samsung,dw-mshc-ddr-timing = <1 2>;
+	bus-width = <8>;
+	cap-mmc-highspeed;
+};
+
+&sdhci2 {
+	bus-width = <4>;
+	samsung,timing = <1 2 3>;
+	cd-gpios = <&gpx0 7 0>;
+	cap-sd-highspeed = "true";
+	cd-inverted = "true";
+	status = "okay";
+};
