@@ -27,11 +27,21 @@
 			bootz ${kernelloadaddr} ${ramdiskloadaddr}";
 	};
 
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0x40000000 0x40000000>;
+	};
+	
 	aliases {
 		mmc0 = &mshc_0;
 		mmc2 = &sdhci2;
 		serial0 = "/serial@13820000";
 		console = "/serial@13820000";
+	};
+
+	emmc_pwrseq: pwrseq {
+		compatible = "mmc-pwrseq-emmc";
+		reset-gpios = <&gpk1 2 0>;
 	};
 
 };
@@ -43,6 +53,7 @@
 	bus-width = <8>;
 	cap-mmc-highspeed;
 	non-removable;
+	mmc-pwrseq = <&emmc_pwrseq>;
 	broken-cd;
 	card-detect-delay = <200>;
 	status = "okay";

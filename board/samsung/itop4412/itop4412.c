@@ -20,8 +20,6 @@ u32 get_board_rev(void)
 
 int exynos_power_init(void)
 {
-	/* Prevent Reset*/
-	writel(0x0, 0x11000c08);
 	return 0;
 }
 
@@ -86,6 +84,10 @@ int exynos_late_init(void)
 		env_set("fastboot_raw_partition_bl2", "0x10 0x20 mmcpart 1");
 		env_set("fastboot_raw_partition_bootloader", "0x30 0x800 mmcpart 1");
 	}
+
+	/* Prevent Reset*/
+	writel(readl(0x11000c08) & ~0x30, 0x11000c08);
+
 	return 0;
 }
 #endif

@@ -294,8 +294,9 @@ static const char *init_mmc_for_env(struct mmc *mmc)
 #if CONFIG_IS_ENABLED(BLK)
 	struct udevice *dev;
 
-	if (blk_get_from_parent(mmc->dev, &dev))
-		return "No block device";
+	if (blk_get_from_parent(mmc->dev, &dev)) 
+		if (mmc_init(mmc))
+			return "No block device";
 #else
 	if (mmc_init(mmc))
 		return "MMC init failed";
