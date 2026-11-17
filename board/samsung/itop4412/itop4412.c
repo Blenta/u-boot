@@ -20,6 +20,8 @@ u32 get_board_rev(void)
 
 int exynos_power_init(void)
 {
+	/* Prevent Reset*/
+	writel(0x0, 0x11000c08);
 	return 0;
 }
 
@@ -37,11 +39,6 @@ int exynos_init(void)
 	gpio_direction_output(EXYNOS4X12_GPIO_M24, 1);
 	gpio_direction_output(EXYNOS4X12_GPIO_M33, 1);
 #endif
-
-	/* PS-Hold high */
-	writel(readl(0x1002330c) | 0x300, 0x1002330c);
-	writel(0x0, 0x11000c08);
-
 	return 0;
 }
 
