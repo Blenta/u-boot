@@ -151,6 +151,16 @@ void exynos_dp_phy_ctrl(unsigned int enable)
 		exynos5_dp_phy_control(enable);
 }
 
+static void exynos4412_set_ps_hold_ctrl(void)
+{
+	struct exynos4412_power *power =
+		(struct exynos4412_power *)samsung_get_base_power();
+
+	/* Set PS-Hold high */
+	setbits_le32(&power->ps_hold_control,
+			EXYNOS_PS_HOLD_CONTROL_DATA_HIGH);
+}
+
 static void exynos5_set_ps_hold_ctrl(void)
 {
 	struct exynos5_power *power =
@@ -171,6 +181,9 @@ void set_ps_hold_ctrl(void)
 {
 	if (cpu_is_exynos5())
 		exynos5_set_ps_hold_ctrl();
+	else if (cpu_is_exynos4())
+		if (proid_is_exynos4412())
+			exynos4412_set_ps_hold_ctrl();
 }
 
 static void exynos5_set_xclkout(void)
