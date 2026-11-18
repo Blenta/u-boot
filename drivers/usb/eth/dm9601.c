@@ -408,7 +408,8 @@ static int dm9601_bind(struct udevice *udev)
 {
 	int ret = 0;
 	u8 env_enetaddr[ETH_ALEN];
-	u8 id, mac[ETH_ALEN];
+	u8 id;
+	ALLOC_CACHE_ALIGN_BUFFER(u8, mac, ETH_ALEN);
 
 	struct eth_pdata *pdata = dev_get_plat(udev);
 	struct dm9601_private *priv = dev_get_priv(udev);
@@ -744,6 +745,7 @@ static const struct usb_device_id dm9601_eth_id_table[] = {
 	{ USB_DEVICE(0x0a46, 0x9000), },	/* DM9000E */
 	{ USB_DEVICE(0x0a46, 0x9620), },	/* DM9620 USB to Fast Ethernet Adapter */
 	{ USB_DEVICE(0x0a46, 0x9621), },	/* DM9621A USB to Fast Ethernet Adapter */
+	{ USB_DEVICE(0x0000, 0x9621), },	/* iTOP-4412 Onboard DM9621A */
 	{ USB_DEVICE(0x0a46, 0x9622), },	/* DM9622 USB to Fast Ethernet Adapter */
 	{ USB_DEVICE(0x0a46, 0x0269), },	/* DM962OA USB to Fast Ethernet Adapter */
 	{ USB_DEVICE(0x0a46, 0x1269), },	/* DM9621A USB to Fast Ethernet Adapter */
