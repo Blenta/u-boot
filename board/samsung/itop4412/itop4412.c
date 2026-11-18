@@ -26,12 +26,11 @@ int exynos_power_init(void)
 int exynos_init(void)
 {
 #ifdef CONFIG_USB_ETHER_DM9601
-	debug("---> ready to init usb3503\n");
-	/* USB3503A Connect */
-	gpio_request(EXYNOS4X12_GPIO_M33, "USB3503A Connect");
-	/* USB3503A Reset */
-	gpio_request(EXYNOS4X12_GPIO_M24, "USB3503A Reset");
-	/* USB3503A Disconnect, Reset, Connect */
+	/* DM9601 Connect */
+	gpio_request(EXYNOS4X12_GPIO_M33, "DM9601 Connect");
+	/* DM9601 Reset */
+	gpio_request(EXYNOS4X12_GPIO_M24, "DM9601 Reset");
+	/* DM9601 Disconnect, Reset, Connect */
 	gpio_direction_output(EXYNOS4X12_GPIO_M33, 0);
 	gpio_direction_output(EXYNOS4X12_GPIO_M24, 0);
 	gpio_direction_output(EXYNOS4X12_GPIO_M24, 1);
