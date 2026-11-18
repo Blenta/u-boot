@@ -25,7 +25,8 @@ int exynos_power_init(void)
 
 int exynos_init(void)
 {
-#ifdef CONFIG_USB_ETHER_DM9601
+	usb_init();
+	#ifdef CONFIG_USB_ETHER_DM9601
 	/* DM9601 Connect */
 	gpio_request(EXYNOS4X12_GPIO_M33, "DM9601 Connect");
 	/* DM9601 Reset */
@@ -74,6 +75,8 @@ int exynos_early_init_f(void)
 #if defined(CONFIG_BOARD_LATE_INIT)
 int exynos_late_init(void)
 {
+	usb_stop();
+	usb_init();
 	if (env_get_ulong("fastboot_mmc_dev", 10, 0) == 2) {// MMC2: SD Card
 		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
 		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
