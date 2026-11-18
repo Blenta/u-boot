@@ -58,7 +58,6 @@ struct dwc2_plat_otg_data exynos4412_otg_data = {
 int board_usb_init(int index, enum usb_init_type init)
 {
 #ifdef CONFIG_USB_GADGET
-	debug("USB_udc_probe\n");
 	return dwc2_udc_probe(&exynos4412_otg_data);
 #else
 	return 0;

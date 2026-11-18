@@ -19,8 +19,25 @@ u32 get_board_rev(void)
 	return 0;
 }
 
+int exynos_power_init(void)
+{
+	return 0;
+}
+
 int exynos_init(void)
 {
+	usb_init();
+	#ifdef CONFIG_USB_ETHER_DM9601
+	/* DM9601 Connect */
+	gpio_request(EXYNOS4X12_GPIO_M33, "DM9601 Connect");
+	/* DM9601 Reset */
+	gpio_request(EXYNOS4X12_GPIO_M24, "DM9601 Reset");
+	/* DM9601 Disconnect, Reset, Connect */
+	gpio_direction_output(EXYNOS4X12_GPIO_M33, 0);
+	gpio_direction_output(EXYNOS4X12_GPIO_M24, 0);
+	gpio_direction_output(EXYNOS4X12_GPIO_M24, 1);
+	gpio_direction_output(EXYNOS4X12_GPIO_M33, 1);
+#endif
 	return 0;
 }
 
@@ -42,7 +59,6 @@ struct dwc2_plat_otg_data exynos4412_otg_data = {
 int board_usb_init(int index, enum usb_init_type init)
 {
 #ifdef CONFIG_USB_GADGET
-	debug("USB_udc_probe\n");
 	return dwc2_udc_probe(&exynos4412_otg_data);
 #else
 	return 0;
@@ -59,6 +75,8 @@ int exynos_early_init_f(void)
 #if defined(CONFIG_BOARD_LATE_INIT)
 int exynos_late_init(void)
 {
+	usb_stop();
+	usb_init();
 	if (env_get_ulong("fastboot_mmc_dev", 10, 0) == 2) {// MMC2: SD Card
 		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
 		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
