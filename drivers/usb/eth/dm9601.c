@@ -724,8 +724,8 @@ static const struct eth_ops dm9601_eth_ops = {
 	.write_hwaddr	= dm9601_write_hwaddr,
 };
 
-U_BOOT_DRIVER(dm9601_eth) = {
-	.name = "dm9601_eth",
+U_BOOT_DRIVER(DM9621A) = {
+	.name = "DM9621A",
 	.id = UCLASS_ETH,
 	.probe = dm9601_eth_probe,
 	.ops = &dm9601_eth_ops,
@@ -752,6 +752,6 @@ static const struct usb_device_id dm9601_eth_id_table[] = {
 	{}, // END
 };
 
-U_BOOT_USB_DEVICE(dm9601_eth, dm9601_eth_id_table);
+U_BOOT_USB_DEVICE(DM9621A, dm9601_eth_id_table);
 #endif
 
