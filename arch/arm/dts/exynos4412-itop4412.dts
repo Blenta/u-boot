@@ -52,6 +52,12 @@
 			reg = <0x125B0000 0x100>;
 		};
 	};
+	
+	emmc_pwrseq: pwrseq {
+		compatible = "mmc-pwrseq-emmc";
+		reset-gpios = <&gpk1 2 1>;
+		post-power-on-delay-ms = <20>;
+	};
 
 };
 
@@ -62,6 +68,7 @@
 	bus-width = <8>;
 	cap-mmc-highspeed;
 	non-removable;
+	mmc-pwrseq = <&emmc_pwrseq>;
 	broken-cd;
 	card-detect-delay = <200>;
 	status = "okay";
