@@ -81,6 +81,8 @@ int exynos_late_init(void)
 	if (mmc_get_env_dev() != 0) {
 		mmc_init(find_mmc_device(0));
 		mmc_init(find_mmc_device(0));
+	} else {
+		mmc_init(find_mmc_device(2));
 	}
 
 	if (env_get_ulong("fastboot_mmc_dev", 10, 0) == 2) {// MMC2: SD Card
