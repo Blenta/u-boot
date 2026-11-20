@@ -56,7 +56,7 @@
 	emmc_pwrseq: pwrseq {
 		compatible = "mmc-pwrseq-emmc";
 		reset-gpios = <&gpk1 2 1>;
-		post-power-on-delay-ms = <20>;
+		post-power-on-delay-ms = <50>;
 	};
 
 };
