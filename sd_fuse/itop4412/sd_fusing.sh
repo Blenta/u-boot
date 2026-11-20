@@ -40,18 +40,19 @@ fi
 
 ####################################
 # check files
-
+E4412_BL1=E4412_N.bl1.bin
+E4412_BL2=../../spl/itop4412-spl.bin
 E4412_UBOOT=../../u-boot.bin
-E4412_UBOOT_SPL=../../spl/itop4412-spl.bin
-# KERNEL=zImage-3.0.86
-# RAMDISK=ramdisk.img
+
+KERNEL=zImage-3.0.15
+RAMDISK=ramdisk.img
 
 if [ ! -f ${E4412_UBOOT} ]; then
 	echo "Error: u-boot.bin NOT found, please build it & try again."
 	exit -1
 fi
 
-if [ ! -f ${E4412_UBOOT_SPL} ]; then
+if [ ! -f ${E4412_BL2} ]; then
 	echo "Error: itop4412-spl.bin NOT found, please build it & try again."
 	exit -1
 fi
@@ -96,12 +97,12 @@ echo ramdisk_position = $ramdisk_position
 #<BL1 fusing>
 echo "---------------------------------------"
 echo "BL1 fusing"
-dd iflag=dsync oflag=dsync if=./E4412_N.bl1.bin of=$1 seek=$signed_bl1_position
+dd iflag=dsync oflag=dsync if=${E4412_BL1} of=$1 seek=$signed_bl1_position
 
 #<BL2 fusing>
 echo "---------------------------------------"
 echo "BL2 fusing"
-dd iflag=dsync oflag=dsync if=${E4412_UBOOT_SPL} of=$1 seek=$bl2_position
+dd iflag=dsync oflag=dsync if=${E4412_BL2} of=$1 seek=$bl2_position
 
 #<u-boot fusing>
 echo "---------------------------------------"
@@ -111,12 +112,12 @@ dd iflag=dsync oflag=dsync if=${E4412_UBOOT} of=$1 seek=$uboot_position
 #<kernel fusing>
 echo "---------------------------------------"
 echo "kernel fusing"
-# dd iflag=dsync oflag=dsync if=${KERNEL} of=$1 seek=$kernel_position
+dd iflag=dsync oflag=dsync if=${KERNEL} of=$1 seek=$kernel_position
 
 #<ramdisk fusing>
 echo "---------------------------------------"
 echo "ramdisk fusing"
-# dd iflag=dsync oflag=dsync if=${RAMDISK} of=$1 seek=$ramdisk_position
+dd iflag=dsync oflag=dsync if=${RAMDISK} of=$1 seek=$ramdisk_position
 
 #<flush to disk>
 sync
