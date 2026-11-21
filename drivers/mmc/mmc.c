@@ -3025,8 +3025,6 @@ retry:
 
 	if (err)
 		return err;
-
-	mdelay(10);
 	
 	/* The internal partition reset to user partition(0) at every CMD0 */
 	mmc_get_blk_desc(mmc)->hwpart = 0;

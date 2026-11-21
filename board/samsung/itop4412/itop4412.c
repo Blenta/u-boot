@@ -78,13 +78,6 @@ int exynos_late_init(void)
 	usb_stop();
 	usb_init();
 
-	if (mmc_get_env_dev() != 0) {
-		mmc_init(find_mmc_device(0));
-		mmc_init(find_mmc_device(0));
-	} else {
-		mmc_init(find_mmc_device(2));
-	}
-
 	if (env_get_ulong("fastboot_mmc_dev", 10, 0) == 2) {// MMC2: SD Card
 		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
 		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
