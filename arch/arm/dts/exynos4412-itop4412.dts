@@ -55,6 +55,34 @@
 
 };
 
+&i2c_1 {
+	status = "okay";
+	samsung,i2c-sda-delay = <100>;
+	samsung,i2c-max-bus-freq = <400000>;
+
+	s5m8767: pmic@66 {
+		compatible = "samsung,s5m8767-pmic";
+		reg = <0x66>;
+		regulators {
+			buck9_reg: BUCK9 {
+				regulator-name = "VDDF28_EMMC";
+				regulator-min-microvolt = <2850000>;
+				regulator-max-microvolt = <2850000>;
+				regulator-always-on;
+				regulator-boot-on;
+			};
+
+			ldo17_reg: LDO17 {
+				regulator-name = "VDDIOAP_MMC012_28";
+				regulator-min-microvolt = <2800000>;
+				regulator-max-microvolt = <2800000>;
+				regulator-always-on;
+				regulator-boot-on;
+			};
+		};
+	};
+};
+
 &mshc_0 {
 	div = <0x3>;
 	index = <4>;
@@ -64,6 +92,8 @@
 	non-removable;
 	broken-cd;
 	card-detect-delay = <200>;
+	vmmc-supply = <&buck9_reg>;
+	vqmmc-supply = <&ldo17_reg>;
 	status = "okay";
 };
 

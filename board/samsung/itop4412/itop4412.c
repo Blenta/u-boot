@@ -24,8 +24,19 @@ int exynos_power_init(void)
 	return 0;
 }
 
+static void itop4412_i2c1_pinmux(void)
+{
+	/* GPD1_2: I2C_1_SDA (func 0x2), GPD1_3: I2C_1_SCL (func 0x2) */
+	gpio_cfg_pin(EXYNOS4X12_GPIO_D12, S5P_GPIO_FUNC(0x2));
+	gpio_cfg_pin(EXYNOS4X12_GPIO_D13, S5P_GPIO_FUNC(0x2));
+	gpio_set_pull(EXYNOS4X12_GPIO_D12, S5P_GPIO_PULL_NONE);
+	gpio_set_pull(EXYNOS4X12_GPIO_D13, S5P_GPIO_PULL_NONE);
+}
+
 int exynos_init(void)
 {
+	itop4412_i2c1_pinmux();
+
 	usb_init();
 	#ifdef CONFIG_USB_ETHER_DM9601
 	/* DM9601 Connect */
