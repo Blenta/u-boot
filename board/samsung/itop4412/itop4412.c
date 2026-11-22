@@ -9,6 +9,7 @@
 #include <asm/arch/mmc.h>
 #include <asm/arch/periph.h>
 #include <asm/arch/pinmux.h>
+#include <linux/delay.h>
 #include <env.h>
 #include <mmc.h>
 #include <usb.h>
@@ -38,17 +39,7 @@ int exynos_init(void)
 	itop4412_i2c1_pinmux();
 
 	usb_init();
-	#ifdef CONFIG_USB_ETHER_DM9601
-	/* DM9601 Connect */
-	gpio_request(EXYNOS4X12_GPIO_M33, "DM9601 Connect");
-	/* DM9601 Reset */
-	gpio_request(EXYNOS4X12_GPIO_M24, "DM9601 Reset");
-	/* DM9601 Disconnect, Reset, Connect */
-	gpio_direction_output(EXYNOS4X12_GPIO_M33, 0);
-	gpio_direction_output(EXYNOS4X12_GPIO_M24, 0);
-	gpio_direction_output(EXYNOS4X12_GPIO_M24, 1);
-	gpio_direction_output(EXYNOS4X12_GPIO_M33, 1);
-#endif
+
 	return 0;
 }
 
@@ -99,9 +90,20 @@ int exynos_late_init(void)
 		env_set("fastboot_raw_partition_bootloader", "0x30 0x800 mmcpart 1");
 	}
 
+	env_set("fastboot_partition_alias_system", "0.0:2");
+	env_set("fastboot_partition_alias_userdata", "0.0:3");
+	env_set("fastboot_partition_alias_cache", "0.0:4");
+
 	/* Prevent Reset*/
 	writel(readl(0x11000c08) & ~0x30, 0x11000c08);
 
 	return 0;
 }
 #endif
+
+void arch_preboot_os(void)
+{
+	usb_stop();
+	/* Isolate USB Host PHY so Linux 3.0.15 runs full usb_host_phy_init() */
+	writel(readl(0x10020708) & ~0x1, 0x10020708);
+}
