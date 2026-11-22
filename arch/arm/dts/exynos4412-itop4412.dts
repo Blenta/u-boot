@@ -44,22 +44,9 @@
 		compatible = "samsung,exynos-ehci";
 		reg = <0x12580000 0x100>;
 		#address-cells = <1>;
-		#size-cells = <1>;
-		status = "okay";
-		/* In order to reset USB ethernet */
-		samsung,vbus-gpio = <&gpc0 1 0>;
-		phy {
-			compatible = "samsung,exynos-usb-phy";
-			reg = <0x125B0000 0x100>;
-		};
-	};
-
-	ehci@12580000 {
-		compatible = "samsung,exynos-ehci";
-		reg = <0x12580000 0x100>;
-		#address-cells = <1>;
 		#size-cells = <0>;
 		status = "okay";
+		/* In order to reset USB ethernet */
 		samsung,vbus-gpio = <&gpc0 1 0>;
 
 		phy {
@@ -90,28 +77,12 @@
 	};
 };
 
-&gpm2 {
-	usb3503-reset-hog {
-		gpio-hog;
-		gpios = <4 0>;
-		output-high;
-		line-name = "usb3503-reset";
-	};
-};
-
 &gpm3 {
 	buck6-en-hog {
 		gpio-hog;
 		gpios = <1 0>;
 		output-high;
 		line-name = "buck6-en";
-	};
-
-	usb3503-connect-hog {
-		gpio-hog;
-		gpios = <3 0>;
-		output-high;
-		line-name = "usb3503-connect";
 	};
 };
 
