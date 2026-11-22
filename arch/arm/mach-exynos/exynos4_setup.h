@@ -541,12 +541,12 @@ struct mem_timings {
 #define ADD_LAT_PALL		(1 << 6)
 #define MEM_TYPE_DDR3		(0x6 << 8)
 #define MEM_WIDTH_32		(0x2 << 12)
-#define NUM_CHIP_2		(1 << 16)
+#define NUM_CHIP_1		(0 << 16)
 #define BL_8			(0x3 << 20)
 #define MEMCONTROL_VAL		(CLK_STOP_DISABLE | DPWRDN_DISABLE\
 				| DPWRDN_TYPE | TP_DISABLE | DSREF_DIABLE\
 				| ADD_LAT_PALL | MEM_TYPE_DDR3 | MEM_WIDTH_32\
-				| NUM_CHIP_2 | BL_8)
+				| NUM_CHIP_1 | BL_8)
 
 #define CHIP_BANK_8		(0x3 << 0)
 #define CHIP_ROW_14		(0x2 << 4)
