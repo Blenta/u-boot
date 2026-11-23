@@ -34,7 +34,11 @@ void tzpc_init(void)
 		if (cpu_is_exynos5() && (addr == end))
 			break;
 
-		writel(DECPROTXSET, &tzpc->decprot2set);
+		if (cpu_is_exynos4() && (addr == start))
+			writel(0xbd, &tzpc->decprot2set);
+		else
+			writel(DECPROTXSET, &tzpc->decprot2set);
+
 		writel(DECPROTXSET, &tzpc->decprot3set);
 	}
 }
