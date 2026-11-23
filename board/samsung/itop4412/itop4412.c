@@ -67,9 +67,18 @@ int board_usb_init(int index, enum usb_init_type init)
 #endif
 }
 
+static void itop4412_scu_init(void)
+{
+	/* Invalidate SCU tag RAMs, allow non-secure access, and enable SCU */
+	writel(0xffff, 0x1050000c);
+	writel(0xfff, 0x10500054);
+	writel(readl(0x10500000) | 0x1, 0x10500000);
+}
+
 #ifdef CONFIG_BOARD_EARLY_INIT_F
 int exynos_early_init_f(void)
 {
+	itop4412_scu_init();
 	return 0;
 }
 #endif
@@ -84,15 +93,18 @@ int exynos_late_init(void)
 		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
 		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
 		env_set("fastboot_raw_partition_bootloader", "0x31 0x800");// Bootloader: 1024K
+		env_set("fastboot_partition_alias_system", "2:2");
+		env_set("fastboot_partition_alias_userdata", "2:3");
+		env_set("fastboot_partition_alias_cache", "2:4");
 	} else {// MMC0: eMMC
 		env_set("fastboot_raw_partition_bl1", "0x0 0x10 mmcpart 1");
 		env_set("fastboot_raw_partition_bl2", "0x10 0x20 mmcpart 1");
 		env_set("fastboot_raw_partition_bootloader", "0x30 0x800 mmcpart 1");
+		env_set("fastboot_partition_alias_system", "0.0:2");
+		env_set("fastboot_partition_alias_userdata", "0.0:3");
+		env_set("fastboot_partition_alias_cache", "0.0:4");
 	}
 
-	env_set("fastboot_partition_alias_system", "0.0:2");
-	env_set("fastboot_partition_alias_userdata", "0.0:3");
-	env_set("fastboot_partition_alias_cache", "0.0:4");
 
 	/* Prevent Reset*/
 	writel(readl(0x11000c08) & ~0x30, 0x11000c08);

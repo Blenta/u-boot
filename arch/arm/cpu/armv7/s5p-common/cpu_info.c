@@ -21,6 +21,13 @@ unsigned int s5p_cpu_rev = 1;
 int arch_cpu_init(void)
 {
 	s5p_set_cpu_id();
+	
+	/* Enable ACTLR.SMP (bit 6) and ACTLR.FW (bit 0) on every core (CPU0..3) */
+	uint32_t actlr;
+	asm volatile("mrc p15, 0, %0, c1, c0, 1" : "=r" (actlr));
+	actlr |= (1 << 6) | (1 << 0);
+	asm volatile("mcr p15, 0, %0, c1, c0, 1" : : "r" (actlr));
+	asm volatile("isb");
 
 	return 0;
 }
@@ -44,7 +51,17 @@ int print_cpuinfo(void)
 	else
 		printf("CPU:   %s%X @ ", s5p_get_cpu_name(), s5p_cpu_id);
 
-	print_freq(get_arm_clk(), "\n");
+	print_freq(get_arm_clk(), "\n       APLL Clock: ");
+	print_freq(get_pll_clk(APLL), ", MPLL Clock: ");
+	print_freq(get_pll_clk(MPLL), ", EPLL Clock: ");
+	print_freq(get_pll_clk(EPLL), ", VPLL Clock: ");
+	print_freq(get_pll_clk(VPLL), "\n       ARM Clock: ");
+	print_freq(get_arm_clk(), ", UART Clock: ");
+	print_freq(get_uart_clk(0), ", MMC Clock: ");
+	print_freq(get_mmc_clk(0), "\n       I2C Clock: ");
+	print_freq(get_i2c_clk(), ", PWM Clock: ");
+	print_freq(get_pwm_clk(), ", LCD Clock: ");
+	print_freq(get_lcd_clk(), "\n\n");
 
 	return 0;
 }
