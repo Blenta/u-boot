@@ -233,6 +233,13 @@ int do_lowlevel_init(void)
 #endif
 #endif
 		mem_ctrl_init(actions & DO_MEM_RESET);
+
+#if defined(CONFIG_TARGET_ITOP4412)
+	/* LED2 */
+	writel(0x1, (0x11000104));
+	writel(0x1, (0x11000100));
+#endif
+
 #if !defined(CONFIG_TARGET_TINY4412) && !defined(CONFIG_TARGET_ITOP4412)
 		tzpc_init();
 #endif

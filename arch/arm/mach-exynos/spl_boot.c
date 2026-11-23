@@ -265,6 +265,14 @@ void copy_uboot_to_ram(void)
 		size = UBOOT_SIZE_BLOC_COUNT;
 
 		copy_bl2 = get_irom_func(MMC_INDEX);
+#if defined(CONFIG_TARGET_ITOP4412)
+	/* LED2 */
+	writel(0x0, (0x11000104));
+	writel(0x0, (0x11000100));
+	/* LED3 */
+	writel(0x2, (0x11000064));
+	writel(0x10, (0x11000060));
+#endif
 		break;
 #ifdef CONFIG_SUPPORT_EMMC_BOOT
 	case BOOT_MODE_EMMC:
@@ -278,6 +286,12 @@ void copy_uboot_to_ram(void)
 
 		copy_bl2_from_emmc(UBOOT_SIZE_BLOC_COUNT, CONFIG_TEXT_BASE);
 		end_bootop_from_emmc();
+#if defined(CONFIG_TARGET_ITOP4412)
+	/* LED3 */
+	writel(0x2, (0x11000064));
+	writel(0x10, (0x11000060));
+#endif
+
 		break;
 #endif
 #ifdef CONFIG_USB_BOOTING
