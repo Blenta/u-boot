@@ -30,7 +30,7 @@
 
 	memory@40000000 {
 		device_type = "memory";
-		reg = <0x40000000 0x40000000>;
+		reg = <0x40000000 0x3ff00000>;
 	};
 	
 	aliases {
@@ -127,8 +127,8 @@
 
 			buck4_reg: BUCK4 {
 				regulator-name = "VDD_G3D";
-				regulator-min-microvolt = <1100000>;
-				regulator-max-microvolt = <1100000>;
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1200000>;
 				regulator-always-on;
 				regulator-boot-on;
 			};
