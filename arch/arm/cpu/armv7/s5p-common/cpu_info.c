@@ -22,13 +22,6 @@ int arch_cpu_init(void)
 {
 	s5p_set_cpu_id();
 	
-	/* Enable ACTLR.SMP (bit 6) and ACTLR.FW (bit 0) on every core (CPU0..3) */
-	uint32_t actlr;
-	asm volatile("mrc p15, 0, %0, c1, c0, 1" : "=r" (actlr));
-	actlr |= (1 << 6) | (1 << 0);
-	asm volatile("mcr p15, 0, %0, c1, c0, 1" : : "r" (actlr));
-	asm volatile("isb");
-
 	return 0;
 }
 #endif
