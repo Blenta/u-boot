@@ -178,15 +178,17 @@
 							| (C2C_RATIO << 4))
 
 /* CLK_DIV_TOP */
-#define ACLK_400_MCUISP_RATIO	0x0
-#define ACLK_266_GPS_RATIO	0x0
+#define ACLK_400_MCUISP_RATIO	0x1
+#define ACLK_266_GPS_RATIO	0x2
 #define ONENAND_RATIO		0x0
 #define ACLK_133_RATIO		0x5
 #define ACLK_160_RATIO		0x4
 #define ACLK_100_RATIO		0x7
 #define ACLK_200_RATIO		0x3
 
-#define CLK_DIV_TOP_VAL		((ONENAND_RATIO << 16)	\
+#define CLK_DIV_TOP_VAL		((ACLK_400_MCUISP_RATIO << 24) \
+							| (ACLK_266_GPS_RATIO << 20) \
+							| (ONENAND_RATIO << 16)	\
 							| (ACLK_133_RATIO << 12) \
 							| (ACLK_160_RATIO << 8)	\
 							| (ACLK_100_RATIO << 4)	\

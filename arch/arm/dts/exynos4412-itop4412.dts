@@ -17,7 +17,7 @@
 	compatible = "topeet,itop4412-elite", "samsung,exynos4412";
 
 	chosen {
-		bootargs ="console=ttySAC2,115200n8 androidboot.console=ttySAC2 ctp=1 skipcali=y";
+		bootargs ="console=ttySAC2,115200n8 ctp=1 skipcali=y";
 	};
 
 	config {
@@ -30,7 +30,7 @@
 
 	memory@40000000 {
 		device_type = "memory";
-		reg = <0x40000000 0x3ff00000>;
+		reg = <0x40000000 0x40000000>;
 	};
 	
 	aliases {
@@ -55,15 +55,6 @@
 		};
 	};
 
-};
-
-&gpx1 {
-	pmic-dvs-hog {
-		gpio-hog;
-		gpios = <1 0>, <2 0>, <3 0>;
-		output-low;
-		line-name = "pmic-dvs";
-	};
 };
 
 &gpm2 {

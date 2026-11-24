@@ -9,7 +9,6 @@
 #include <asm/arch/mmc.h>
 #include <asm/arch/periph.h>
 #include <asm/arch/pinmux.h>
-#include <linux/delay.h>
 #include <env.h>
 #include <mmc.h>
 #include <usb.h>
@@ -67,18 +66,9 @@ int board_usb_init(int index, enum usb_init_type init)
 #endif
 }
 
-static void itop4412_scu_init(void)
-{
-	/* Invalidate SCU tag RAMs, allow non-secure access, and enable SCU */
-	writel(0xffff, 0x1050000c);
-	writel(0xfff, 0x10500054);
-	writel(readl(0x10500000) | 0x1, 0x10500000);
-}
-
 #ifdef CONFIG_BOARD_EARLY_INIT_F
 int exynos_early_init_f(void)
 {
-	itop4412_scu_init();
 	return 0;
 }
 #endif
