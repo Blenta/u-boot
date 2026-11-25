@@ -76,8 +76,8 @@ int exynos_early_init_f(void)
 #if defined(CONFIG_BOARD_LATE_INIT)
 int exynos_late_init(void)
 {
-	usb_stop();
-	usb_init();
+	// usb_stop();
+	// usb_init();
 
 	if (env_get_ulong("fastboot_mmc_dev", 10, 0) == 2) {// MMC2: SD Card
 		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
@@ -95,6 +95,8 @@ int exynos_late_init(void)
 		env_set("fastboot_partition_alias_cache", "0.0:4");
 	}
 
+	/* CLK_DIV_FSYS3 = 0x00000004 */
+	writel(0x00000004, 0x1003c54c);
 
 	/* Prevent Reset*/
 	writel(readl(0x11000c08) & ~0x30, 0x11000c08);
