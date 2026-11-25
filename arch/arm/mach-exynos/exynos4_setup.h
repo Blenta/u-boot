@@ -590,13 +590,6 @@ struct mem_timings {
 #define IV_SIZE			(0x7 << 0)
 #define IVCONTROL_VAL		(IV_ON | IV_SIZE)
 
-// #define CLK_SRC_TOP1_VAL    0x00011000
-// #define CLK_DIV_TOP_VAL     0x00005473
-// #define CLK_DIV_FSYS3_VAL   0x00000004
-
-// #define DMC_CONCONTROL_VAL   0x0fff33ea
-// #define DMC_MEMCONTROL_VAL   0x00302613
-
 #if defined(CONFIG_TARGET_ORIGEN)
 #define TIMINGREF_VAL		0x000000BB
 #define TIMINGROW_VAL		0x4046654f
