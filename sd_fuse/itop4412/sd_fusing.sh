@@ -62,12 +62,12 @@ fi
 
 block=512
 reserve_size=512
-bl1_size=$((8*1024)) #8KB
-bl2_size=$((16*1024))	#16KB
-uboot_size=$((1024*1024))	#1024KB
-env_size=$((16*1024))	#16KB
-kernel_size=$((10*1024*1024))	#10MB
-ramdisk_size=$((10*1024*1024))	#10MB
+bl1_size=$((8*1024)) 			#8KB
+bl2_size=$((16*1024))			#16KB
+uboot_size=$((520*1024))		#520KB
+env_size=$((16*1024))			#16KB
+kernel_size=$((6*1024*1024))	#6MB
+ramdisk_size=$((6*1024*1024))	#6MB
 
 echo "-----------------size----------------------"
 echo block = $block
@@ -79,12 +79,12 @@ echo env_size = $env_size
 echo kernel_size = $kernel_size
 echo ramdisk_size = $ramdisk_size
 
-signed_bl1_position=$((reserve_size/block))
-bl2_position=$((signed_bl1_position+bl1_size/block))
-uboot_position=$((bl2_position+bl2_size/block))
-env_position=$((uboot_position+uboot_size/block))
-kernel_position=$((env_position+env_size/block))
-ramdisk_position=$((kernel_position+kernel_size/block))
+signed_bl1_position=$((reserve_size/block))					# 1
+bl2_position=$((signed_bl1_position+bl1_size/block))		# 17
+uboot_position=$((bl2_position+bl2_size/block))				# 49
+env_position=$((uboot_position+uboot_size/block))			# 1089
+kernel_position=$((env_position+env_size/block))			# 1021
+ramdisk_position=$((kernel_position+kernel_size/block))		# 13409
 
 echo "-----------------offset----------------------"
 echo signed_bl1_position = $signed_bl1_position
