@@ -178,7 +178,7 @@ void mem_ctrl_init(int reset)
 	 * 1: half_sync
 	 * 0: full_sync
 	 */
-	writel(1, ASYNC_CONFIG);
+	writel(0, ASYNC_CONFIG);
 #if defined(CONFIG_TARGET_ORIGEN) || defined(CONFIG_TARGET_TINY4412) || defined(CONFIG_TARGET_ITOP4412)
 	/* Interleave: 2Bit, Interleave_bit1: 0x15, Interleave_bit0: 0x7 */
 	writel(APB_SFR_INTERLEAVE_CONF_VAL, EXYNOS4_MIU_BASE +
