@@ -97,8 +97,8 @@
 #define MUX_ACLK_266_GPS_SEL_SCLKAPLL			0x1
 
 #define CLK_SRC_TOP1_VAL	\
-	((MUX_ACLK_400_MCUISP_SUB_SEL_DIVOUT_ACLK_400_MCUISP << 24) \
-	|(MUX_ACLK_200_SUB_SEL_DIVOUT_ACLK_200 << 20) \
+	((MUX_ACLK_400_MCUISP_SUB_SEL_FINPLL << 24) \
+	|(MUX_ACLK_200_SUB_SEL_FINPLL << 20) \
 	|(MUX_ACLK_266_GPS_SUB_SEL_DIVOUT_ACLK_266_GPS << 16) \
 	|(MUX_MPLL_USER_SEL_T_SCLKMPLLL << 12))
 
@@ -119,15 +119,14 @@
 								|(MUX_GDR_SEL_SCLKMPLL))
 
 /* CLK_DIV_CPU0 */
-#define CORE2_RATIO		0x0	//1400MHz
-#define APLL_RATIO		0x0	//1400MHz
-#define PCLK_DBG_RATIO	0x1	//100MHz	
-#define ATB_RATIO		0x6	//200MHz
-#define PERIPH_RATIO	0x0	//1400MHz
-#define COREM1_RATIO	0x7	//175MHz
-#define COREM0_RATIO	0x3	//350MHz
-#define CORE_RATIO		0x0	//1400MHz
-
+#define CORE2_RATIO		0x0
+#define APLL_RATIO		0x1
+#define PCLK_DBG_RATIO	0x1
+#define ATB_RATIO		0x4
+#define PERIPH_RATIO	0x3
+#define COREM1_RATIO	0x7
+#define COREM0_RATIO	0x3
+#define CORE_RATIO		0x0
 #define CLK_DIV_CPU0_VAL	((CORE2_RATIO << 28) \
 							| (APLL_RATIO << 24) \
 							| (PCLK_DBG_RATIO << 20) \
@@ -138,7 +137,7 @@
 							| (CORE_RATIO << 0))
 
 /* CLK_DIV_CPU1 */
-#define COPY_RATIO			0x3
+#define COPY_RATIO			0x4
 #define HPM_RATIO			0x0
 #define CORES_RATIO			0x0
 
@@ -167,19 +166,21 @@
 							| (ACP_RATIO << 0))
 
 /* CLK_DIV_DMC1 */
-#define DPM_RATIO		0x0
+#define DPM_RATIO		0x1
 #define DVSEM_RATIO		0x0
 #define C2C_ACLK_RATIO	0x1
-#define PWI_RATIO		0x0
-#define C2C_RATIO		0x1
+#define PWI_RATIO		0x1
+#define C2C_RATIO		0x0
 #define G2D_ACP_RATIO	0x0
 
-#define CLK_DIV_DMC1_VAL	((PWI_RATIO << 8) \
+#define CLK_DIV_DMC1_VAL	((DPM_RATIO << 24) \
+							| (C2C_ACLK_RATIO << 16) \
+							| (PWI_RATIO << 8) \
 							| (C2C_RATIO << 4))
 
 /* CLK_DIV_TOP */
-#define ACLK_400_MCUISP_RATIO	0x1
-#define ACLK_266_GPS_RATIO	0x2
+#define ACLK_400_MCUISP_RATIO	0x0
+#define ACLK_266_GPS_RATIO	0x0
 #define ONENAND_RATIO		0x0
 #define ACLK_133_RATIO		0x5
 #define ACLK_160_RATIO		0x4
@@ -254,7 +255,7 @@
 				| (MMC2_RATIO << 0))
 
 /* CLK_DIV_FSYS3 */
-#define MMC4_RATIO		0xF
+#define MMC4_RATIO		0x4
 #define MMC4_PRE_RATIO		0x0
 #define CLK_DIV_FSYS3_VAL	((MMC4_PRE_RATIO << 8) \
 				| (MMC4_RATIO << 0))
@@ -342,13 +343,14 @@
 /* SCLK G3D */
 /* CLK_SRC_G3D */
 #define G3D_SEL_MPLL		0
+#define G3D_SEL_APLL		1
 #define MOUTG3D_0		0
 #define G3D_SEL			MOUTG3D_0
-#define G3D_0_SEL		G3D_SEL_MPLL
+#define G3D_0_SEL		G3D_SEL_APLL
 #define CLK_SRC_G3D_VAL		((G3D_SEL << 8) | (G3D_0_SEL))
 
 /* CLK_DIV_G3D */
-#define G3D_RATIO		1
+#define G3D_RATIO		2
 #define CLK_DIV_G3D_VAL		(G3D_RATIO)
 
 /* SCLK LCD0 */
@@ -418,10 +420,10 @@
 /* EPLL_CON2 */
 #define EPLL_CON2_VAL	0x00000080
 
-/* VPLL_CON0 106MHz*/
-#define VPLL_MDIV		0x35
-#define VPLL_PDIV		0x3
-#define VPLL_SDIV		0x2
+/* VPLL_CON0 108MHz*/
+#define VPLL_MDIV		0x48
+#define VPLL_PDIV		0x2
+#define VPLL_SDIV		0x3
 #define VPLL_CON0_VAL		SET_PLL(VPLL_MDIV, VPLL_PDIV, VPLL_SDIV)
 
 /* VPLL_CON1 */
@@ -529,11 +531,7 @@ struct mem_timings {
 #define QOS_FAST_DISABLE	(0 << 11)
 #define RD_FETCH		(0x3 << 12)
 #define TIMEOUT_LEVEL0		(0xFFF << 16)
-#define CONCONTROL_VAL		(ASYNC | CLK_RATIO | DIV_PIPE | AWR_ON\
-				| AREF_DISABLE | DRV_TYPE_DISABLE\
-				| CHIP0_NOT_EMPTY | CHIP1_NOT_EMPTY\
-				| DQ_SWAP_DISABLE | QOS_FAST_DISABLE\
-				| RD_FETCH | TIMEOUT_LEVEL0)
+#define CONCONTROL_VAL		0x0fff30ca
 
 #define CLK_STOP_DISABLE	(0 << 0)
 #define DPWRDN_DISABLE		(0 << 1)
@@ -545,16 +543,13 @@ struct mem_timings {
 #define MEM_WIDTH_32		(0x2 << 12)
 #define NUM_CHIP_1		(0 << 16)
 #define BL_8			(0x3 << 20)
-#define MEMCONTROL_VAL		(CLK_STOP_DISABLE | DPWRDN_DISABLE\
-				| DPWRDN_TYPE | TP_DISABLE | DSREF_DIABLE\
-				| ADD_LAT_PALL | MEM_TYPE_DDR3 | MEM_WIDTH_32\
-				| NUM_CHIP_1 | BL_8)
+#define MEMCONTROL_VAL		0x00302613
 
 #define CHIP_BANK_8		(0x3 << 0)
 #define CHIP_ROW_14		(0x2 << 4)
 #define CHIP_COL_10		(0x3 << 8)
 #define CHIP_MAP_INTERLEAVED	(1 << 12)
-#define CHIP_MASK		(0xc0 << 16)
+#define CHIP_MASK		(0x80 << 16)
 #ifdef CONFIG_MIU_LINEAR
 #define CHIP0_BASE		(0x40 << 24)
 #define CHIP1_BASE		(0x60 << 24)
@@ -567,7 +562,7 @@ struct mem_timings {
 #define MEMCONFIG1_VAL		(CHIP_BANK_8 | CHIP_ROW_14 | CHIP_COL_10\
 				| CHIP_MAP_INTERLEAVED | CHIP_MASK | CHIP1_BASE)
 
-#define TP_CNT			(0xff << 24)
+#define TP_CNT			(0x64 << 24)
 #define PRECHCONFIG		TP_CNT
 
 #define CTRL_OFF		(0 << 0)
@@ -587,31 +582,35 @@ struct mem_timings {
 #define CTRL_SHGATE		(1 << 29)
 #define TERM_READ_EN		(1 << 30)
 #define TERM_WRITE_EN		(1 << 31)
-#define CONTROL1_VAL		(CTRL_SHIFTC | CTRL_REF | CTRL_SHGATE\
-				| TERM_READ_EN | TERM_WRITE_EN)
+#define CONTROL1_VAL		(CTRL_SHIFTC | CTRL_REF | CTRL_SHGATE)
 
 #define CONTROL2_VAL		0x00000000
 
 #define IV_ON			(0x1 << 31)
-#define IV_SIZE			(0x1F << 0)
+#define IV_SIZE			(0x7 << 0)
 #define IVCONTROL_VAL		(IV_ON | IV_SIZE)
+
+// #define CLK_SRC_TOP1_VAL    0x00011000
+// #define CLK_DIV_TOP_VAL     0x00005473
+// #define CLK_DIV_FSYS3_VAL   0x00000004
+
+// #define DMC_CONCONTROL_VAL   0x0fff33ea
+// #define DMC_MEMCONTROL_VAL   0x00302613
 
 #if defined(CONFIG_TARGET_ORIGEN)
 #define TIMINGREF_VAL		0x000000BB
 #define TIMINGROW_VAL		0x4046654f
 #define	TIMINGDATA_VAL		0x46400506
 #define	TIMINGPOWER_VAL		0x52000A3C
-#elif defined(CONFIG_TARGET_TINY4412) || defined(CONFIG_TARGET_ITOP4412)
-/* APLL 1400MHz */
+#elif defined(CONFIG_TARGET_TINY4412)
 #define TIMINGREF_VAL		0x000000BB
 #define TIMINGROW_VAL		0x6946654f
 #define	TIMINGDATA_VAL		0x46460506
 #define	TIMINGPOWER_VAL		0x5200183c
-#else
-/* APLL 500MHz */
-#define TIMINGREF_VAL		0x000000BC
-#define TIMINGROW_VAL		0x45430506
-#define	TIMINGDATA_VAL		0x56500506
-#define	TIMINGPOWER_VAL		0x5444033d
+#elif defined(CONFIG_TARGET_ITOP4412)
+#define TIMINGREF_VAL		0x000000BB
+#define TIMINGROW_VAL		0x7846654f
+#define	TIMINGDATA_VAL		0x46400506
+#define	TIMINGPOWER_VAL		0x52000a3c
 #endif
 #endif
