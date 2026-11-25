@@ -17,7 +17,7 @@
 	compatible = "topeet,itop4412-elite", "samsung,exynos4412";
 
 	chosen {
-		bootargs ="console=ttySAC2,115200n8 ctp=1 skipcali=y";
+		bootargs ="console=ttySAC2,115200";
 	};
 
 	config {
@@ -102,8 +102,8 @@
 
 			buck2_reg: BUCK2 {
 				regulator-name = "VDD_ARM";
-				regulator-min-microvolt = <1150000>;
- 				regulator-max-microvolt = <1450000>;
+				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <1200000>;
 				regulator-always-on;
 				regulator-boot-on;
 			};
