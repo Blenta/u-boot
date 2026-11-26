@@ -522,28 +522,35 @@ struct mem_timings {
 #define ASYNC			(0 << 0)
 #define CLK_RATIO		(1 << 1)
 #define DIV_PIPE		(1 << 3)
-#define AWR_ON			(1 << 4)
+#define AWR_OFF			(0 << 4)
 #define AREF_DISABLE		(0 << 5)
-#define DRV_TYPE_DISABLE	(0 << 6)
+#define DRV_TYPE_STATIC_PULL_DOWN	(0x3 << 6)
 #define CHIP0_NOT_EMPTY		(0 << 8)
 #define CHIP1_NOT_EMPTY		(0 << 9)
 #define DQ_SWAP_DISABLE		(0 << 10)
 #define QOS_FAST_DISABLE	(0 << 11)
 #define RD_FETCH		(0x3 << 12)
 #define TIMEOUT_LEVEL0		(0xFFF << 16)
-#define CONCONTROL_VAL		0x0fff30ca
+#define CONCONTROL_VAL		(ASYNC | CLK_RATIO | DIV_PIPE | AWR_OFF\
+				| AREF_DISABLE | DRV_TYPE_STATIC_PULL_DOWN\
+				| CHIP0_NOT_EMPTY | CHIP1_NOT_EMPTY\
+				| DQ_SWAP_DISABLE | QOS_FAST_DISABLE\
+				| RD_FETCH | TIMEOUT_LEVEL0)
 
-#define CLK_STOP_DISABLE	(0 << 0)
-#define DPWRDN_DISABLE		(0 << 1)
+#define CLK_STOP_ENABLE	(1 << 0)
+#define DPWRDN_ENABLE		(1 << 1)
 #define DPWRDN_TYPE		(0 << 3)
-#define TP_DISABLE		(0 << 4)
+#define TP_ENABLE		(1 << 4)
 #define DSREF_DIABLE		(0 << 5)
-#define ADD_LAT_PALL		(1 << 6)
+#define ADD_LAT_PALL		(0 << 6)
 #define MEM_TYPE_DDR3		(0x6 << 8)
 #define MEM_WIDTH_32		(0x2 << 12)
 #define NUM_CHIP_1		(0 << 16)
 #define BL_8			(0x3 << 20)
-#define MEMCONTROL_VAL		0x00302613
+#define MEMCONTROL_VAL		(CLK_STOP_ENABLE | DPWRDN_ENABLE\
+				| DPWRDN_TYPE | TP_ENABLE | DSREF_DIABLE\
+				| ADD_LAT_PALL | MEM_TYPE_DDR3 | MEM_WIDTH_32\
+				| NUM_CHIP_1 | BL_8)
 
 #define CHIP_BANK_8		(0x3 << 0)
 #define CHIP_ROW_14		(0x2 << 4)
@@ -587,7 +594,11 @@ struct mem_timings {
 #define CONTROL2_VAL		0x00000000
 
 #define IV_ON			(0x1 << 31)
+#if defined(CONFIG_TARGET_TINY4412)
+#define IV_SIZE			(0x1F << 0)
+#elif defined(CONFIG_TARGET_ITOP4412)
 #define IV_SIZE			(0x7 << 0)
+#endif
 #define IVCONTROL_VAL		(IV_ON | IV_SIZE)
 
 #if defined(CONFIG_TARGET_ORIGEN)
@@ -595,12 +606,7 @@ struct mem_timings {
 #define TIMINGROW_VAL		0x4046654f
 #define	TIMINGDATA_VAL		0x46400506
 #define	TIMINGPOWER_VAL		0x52000A3C
-#elif defined(CONFIG_TARGET_TINY4412)
-#define TIMINGREF_VAL		0x000000BB
-#define TIMINGROW_VAL		0x6946654f
-#define	TIMINGDATA_VAL		0x46460506
-#define	TIMINGPOWER_VAL		0x5200183c
-#elif defined(CONFIG_TARGET_ITOP4412)
+#elif defined(CONFIG_TARGET_ITOP4412) || defined(CONFIG_TARGET_TINY4412)
 #define TIMINGREF_VAL		0x000000BB
 #define TIMINGROW_VAL		0x7846654f
 #define	TIMINGDATA_VAL		0x46400506
