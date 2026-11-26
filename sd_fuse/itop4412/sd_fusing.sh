@@ -65,7 +65,7 @@ reserve_size=512
 bl1_size=$((8*1024)) 			#8KB
 bl2_size=$((16*1024))			#16KB
 uboot_size=$((520*1024))		#520KB
-env_size=$((16*1024))			#16KB
+env_size=$((16*1024 - 512))			#16KB - 512b
 kernel_size=$((6*1024*1024))	#6MB
 ramdisk_size=$((6*1024*1024))	#6MB
 
@@ -83,8 +83,8 @@ signed_bl1_position=$((reserve_size/block))					# 1
 bl2_position=$((signed_bl1_position+bl1_size/block))		# 17
 uboot_position=$((bl2_position+bl2_size/block))				# 49
 env_position=$((uboot_position+uboot_size/block))			# 1089
-kernel_position=$((env_position+env_size/block))			# 1021
-ramdisk_position=$((kernel_position+kernel_size/block))		# 13409
+kernel_position=$((env_position+env_size/block))			# 1020
+ramdisk_position=$((kernel_position+kernel_size/block))		# 13408
 
 echo "-----------------offset----------------------"
 echo signed_bl1_position = $signed_bl1_position
