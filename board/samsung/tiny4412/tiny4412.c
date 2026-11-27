@@ -27,17 +27,6 @@ int exynos_power_init(void)
 int exynos_init(void)
 {
 	usb_init();
-	#ifdef CONFIG_USB_ETHER_DM9601
-	/* DM9601 Connect */
-	gpio_request(EXYNOS4X12_GPIO_M33, "DM9601 Connect");
-	/* DM9601 Reset */
-	gpio_request(EXYNOS4X12_GPIO_M24, "DM9601 Reset");
-	/* DM9601 Disconnect, Reset, Connect */
-	gpio_direction_output(EXYNOS4X12_GPIO_M33, 0);
-	gpio_direction_output(EXYNOS4X12_GPIO_M24, 0);
-	gpio_direction_output(EXYNOS4X12_GPIO_M24, 1);
-	gpio_direction_output(EXYNOS4X12_GPIO_M33, 1);
-#endif
 	return 0;
 }
 
