@@ -44,8 +44,8 @@
 		#address-cells = <1>;
 		#size-cells = <1>;
 		status = "okay";
-		/* In order to reset USB ethernet */
-		samsung,vbus-gpio = <&gpc0 1 0>;
+		/* GPM2_4_USBRST resets USB4640 hub and DM9621 */
+		samsung,vbus-gpio = <&gpm2 4 0>;
 		phy {
 			compatible = "samsung,exynos-usb-phy";
 			reg = <0x125B0000 0x100>;
@@ -56,10 +56,10 @@
 
 
 &sdhci0 {
-	bus-width = <4>;
+	bus-width = <8>;
 	samsung,timing = <1 2 3>;
-	cap-mmc-highspeed = "true";
-	non-removable = "true";
+	cap-mmc-highspeed;
+	non-removable;
 	status = "okay";
 };
 
@@ -68,7 +68,7 @@
 	bus-width = <4>;
 	samsung,timing = <1 2 3>;
 	cd-gpios = <&gpk2 2 0>;
-	cap-sd-highspeed = "true";
-	cd-inverted = "true";
+	cap-sd-highspeed;
+	cd-inverted;
 	status = "okay";
 };
