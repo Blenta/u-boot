@@ -73,6 +73,14 @@ int exynos_early_init_f(void)
 }
 #endif
 
+uint mmc_get_env_part(struct mmc *mmc)
+{
+	if (IS_SD(mmc))
+		return 0;
+
+	return CONFIG_ENV_MMC_EMMC_HW_PARTITION;
+}
+
 #if defined(CONFIG_BOARD_LATE_INIT)
 int exynos_late_init(void)
 {
