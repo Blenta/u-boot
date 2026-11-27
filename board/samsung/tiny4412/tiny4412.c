@@ -73,8 +73,8 @@ uint mmc_get_env_part(struct mmc *mmc)
 #if defined(CONFIG_BOARD_LATE_INIT)
 int exynos_late_init(void)
 {
-	usb_stop();
-	usb_init();
+	// usb_stop();
+	// usb_init();
 	if (env_get_ulong("fastboot_mmc_dev", 10, 0) == 2) {// MMC2: SD Card
 		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
 		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
@@ -87,3 +87,10 @@ int exynos_late_init(void)
 	return 0;
 }
 #endif
+
+void arch_preboot_os(void)
+{
+	usb_stop();
+	/* Isolate USB Host PHY so Linux runs full usb_host_phy_init() */
+	writel(readl(0x10020708) & ~0x1, 0x10020708);
+}
