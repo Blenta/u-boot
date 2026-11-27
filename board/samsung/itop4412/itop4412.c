@@ -82,14 +82,14 @@ int exynos_late_init(void)
 	if (env_get_ulong("fastboot_mmc_dev", 10, 0) == 2) {// MMC2: SD Card
 		env_set("fastboot_raw_partition_bl1", "0x1 0x10"); // Reserved: 1 block, BL1: 8K
 		env_set("fastboot_raw_partition_bl2", "0x11 0x20");// BL2: 16K
-		env_set("fastboot_raw_partition_bootloader", "0x31 0x800");// Bootloader: 1024K
+		env_set("fastboot_raw_partition_bootloader", "0x31 0x410");// Bootloader: 520K
 		env_set("fastboot_partition_alias_system", "2:2");
 		env_set("fastboot_partition_alias_userdata", "2:3");
 		env_set("fastboot_partition_alias_cache", "2:4");
 	} else {// MMC0: eMMC
 		env_set("fastboot_raw_partition_bl1", "0x0 0x10 mmcpart 1");
 		env_set("fastboot_raw_partition_bl2", "0x10 0x20 mmcpart 1");
-		env_set("fastboot_raw_partition_bootloader", "0x30 0x800 mmcpart 1");
+		env_set("fastboot_raw_partition_bootloader", "0x30 0x410 mmcpart 1");
 		env_set("fastboot_partition_alias_system", "0.0:2");
 		env_set("fastboot_partition_alias_userdata", "0.0:3");
 		env_set("fastboot_partition_alias_cache", "0.0:4");
