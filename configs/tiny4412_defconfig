@@ -8,7 +8,7 @@ CONFIG_SKIP_LOWLEVEL_INIT=y
 CONFIG_SPL_SKIP_LOWLEVEL_INIT=y
 
 CONFIG_USE_BOOTARGS=y
-CONFIG_BOOTARGS="console=ttySAC0,115200n8 androidboot.console=ttySAC0 ctp=1 skipcali=y ethmac=1C:6F:65:34:51:7E androidboot.selinux=permissive mem=512M"
+CONFIG_BOOTARGS="console=ttySAC0,115200n8 androidboot.console=ttySAC0 ctp=1 skipcali=y ethmac=1C:6F:65:34:51:7E androidboot.selinux=permissive"
 
 CONFIG_TEXT_BASE=0x43E00000
 CONFIG_SYS_MALLOC_LEN=0x5004000
