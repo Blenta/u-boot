@@ -488,7 +488,7 @@ struct mem_timings {
 
 #if defined(CONFIG_TARGET_ORIGEN) || defined(CONFIG_TARGET_TINY4412) || defined(CONFIG_TARGET_ITOP4412)
 /* Interleave: 2Bit, Interleave_bit1: 0x15, Interleave_bit0: 0x7 */
-#define APB_SFR_INTERLEAVE_CONF_VAL	0x20001507
+#define APB_SFR_INTERLEAVE_CONF_VAL		0x20001507
 #define APB_SFR_ARBRITATION_CONF_VAL	0x00000001
 #endif
 
@@ -558,22 +558,29 @@ struct mem_timings {
 #define ADD_LAT_PALL		(0 << 6)
 #define MEM_TYPE_DDR3		(0x6 << 8)
 #define MEM_WIDTH_32		(0x2 << 12)
-#define NUM_CHIP_1		(0 << 16)
+#if defined(CONFIG_TARGET_TINY4412)
+/* 2 Chips on DMC0 */
+#define NUM_CHIP		(1 << 16)
+#elif defined(CONFIG_TARGET_ITOP4412)
+/* 1 Chip on DMC0 and DMC1 */
+#define NUM_CHIP		(0 << 16)
+#endif
 #define BL_8			(0x3 << 20)
 #define MEMCONTROL_VAL		(CLK_STOP_ENABLE | DPWRDN_ENABLE\
 				| DPWRDN_TYPE | TP_ENABLE | DSREF_DIABLE\
 				| ADD_LAT_PALL | MEM_TYPE_DDR3 | MEM_WIDTH_32\
-				| NUM_CHIP_1 | BL_8)
+				| NUM_CHIP | BL_8)
 
 #define CHIP_BANK_8		(0x3 << 0)
 #define CHIP_ROW_14		(0x2 << 4)
 #define CHIP_COL_10		(0x3 << 8)
 #define CHIP_MAP_INTERLEAVED	(1 << 12)
-#define CHIP_MASK		(0x80 << 16)
-#ifdef CONFIG_MIU_LINEAR
+#if defined(CONFIG_TARGET_TINY4412)
+#define CHIP_MASK		(0xE0 << 16)
 #define CHIP0_BASE		(0x40 << 24)
 #define CHIP1_BASE		(0x60 << 24)
-#else
+#elif defined(CONFIG_TARGET_ITOP4412)
+#define CHIP_MASK		(0x80 << 16)
 #define CHIP0_BASE		(0x40 << 24)
 #define CHIP1_BASE		(0x80 << 24)
 #endif
